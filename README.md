@@ -1,2 +1,2 @@
-# circular-buffer
+# Circular-buffer
 Circular Buffer Library
