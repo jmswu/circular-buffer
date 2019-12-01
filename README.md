@@ -1,2 +1,2 @@
 # Circular-buffer
-Circular Buffer Library
+Circular Buffer Library for embeded system
