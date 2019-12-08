@@ -7,6 +7,9 @@ extern "C" {
 
 #include <stdint.h>
 
+/* User need to insert codes that apply to the archetechure 
+ * that will disable global interrupt
+ */
 #define CBUFF_CRITICAL_SECTION_BEGIN()      do{/* user code here */}while(0)
 #define CBUFF_CRITICAL_SECTION_END()        do{/* user code here */}while(0)
 
@@ -29,8 +32,19 @@ typedef CBUFF_Struct *CBUFF_Handle;
  */
 CBUFF_Handle CBUFF_construct(volatile CBUFF_Struct *cbuff, volatile uint8_t *data, uint16_t size);
 
+/* Put one byte into the circular buffer
+ * @param CBUFF_Handle handle               - circular buffer handler
+ * @param uint8_t data                      - one byte that need to be put into the buffer
+ * @return                                  - void
+ */
 void CBUFF_put(CBUFF_Handle handle, uint8_t data);
+
+/* Get one byte from the circular buffer
+ * @param CBUFF_Handle handle               - circular buffer handler
+ * @return uint8_t                          - one byte read from the circular buffer
+ */
 uint8_t CBUFF_get(CBUFF_Handle handle);
+
 uint8_t CBUFF_peek(CBUFF_Handle handle);
 int CBUFF_isFull(CBUFF_Handle hanle);
 int CBUFF_isEmpty(CBUFF_Handle handle);
