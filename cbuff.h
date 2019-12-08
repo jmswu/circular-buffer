@@ -13,7 +13,6 @@ extern "C" {
 #define CBUFF_CRITICAL_SECTION_BEGIN()      do{/* user code here */}while(0)
 #define CBUFF_CRITICAL_SECTION_END()        do{/* user code here */}while(0)
 
-
 typedef struct CBUFF_STRUCT{
     volatile uint16_t head;                 /* pointing to the head of the ring buffer      */
     volatile uint16_t tail;                 /* pointing to the tail of the ring buffer      */
@@ -45,7 +44,13 @@ void CBUFF_put(CBUFF_Handle handle, uint8_t data);
  */
 uint8_t CBUFF_get(CBUFF_Handle handle);
 
+/* Get one byte from the circular buffer without actually remove it from the ring buffer
+ * @param CBUFF_Handle handle               - circular buffer handler
+ * @return uint8_t                          - one byte read from the circular buffer
+ */
 uint8_t CBUFF_peek(CBUFF_Handle handle);
+
+
 int CBUFF_isFull(CBUFF_Handle hanle);
 int CBUFF_isEmpty(CBUFF_Handle handle);
 

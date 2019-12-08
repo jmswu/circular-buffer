@@ -56,3 +56,11 @@ uint8_t CBUFF_get(CBUFF_Handle handle){
 
     return data;
 }
+
+uint8_t CBUFF_peek(CBUFF_Handle handle){
+    return handle->data[handle->tail];
+}
+
+int CBUFF_isFull(CBUFF_Handle hanle){
+    
+}
