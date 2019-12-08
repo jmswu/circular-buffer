@@ -8,15 +8,21 @@ extern "C" {
 #include <stdint.h>
 
 typedef struct CBUFF_STRUCT{
-    volatile uint16_t head;
-    volatile uint16_t tail;
-    volatile uint16_t count;
-    volatile uint16_t capacity;
-    volatile uint8_t *data;
+    volatile uint16_t head;                 /* pointing to the head of the ring buffer      */
+    volatile uint16_t tail;                 /* pointing to the tail of the ring buffer      */
+    volatile uint16_t count;                /* number of byte currented in the ring buffer  */
+    volatile uint16_t capacity;             /* the maximum of byte allowed in the buffer    */
+    volatile uint8_t *data;                 /* pointer to the buffer                        */
 }CBUFF_Struct;
 
 typedef CBUFF_Struct *CBUFF_Handle;
 
+/* Construct the initialize the ring buffer
+ * @param volatile CBUFF_Struct *cbuff      - pointer to the ring buffer structure
+ * @param volatile uint8_t *data            - pointer to the ring buffer memory location
+ * @param uint16_t size                     - the maximum capacity of the ring buffer
+ * @return CBUFF_Handle                     - handle to ring buffer
+ */
 CBUFF_Handle CBUFF_construct(volatile CBUFF_Struct *cbuff, volatile uint8_t *data, uint16_t size);
 void CBUFF_put(CBUFF_Handle handle, uint8_t data);
 uint8_t CBUFF_get(CBUFF_Handle handle);
