@@ -58,9 +58,28 @@ uint8_t CBUFF_get(CBUFF_Handle handle){
 }
 
 uint8_t CBUFF_peek(CBUFF_Handle handle){
+
+    /* check handle */
+    if (handle == 0) return 0;
+
     return handle->data[handle->tail];
 }
 
-int CBUFF_isFull(CBUFF_Handle hanle){
-    
+int CBUFF_isFull(CBUFF_Handle handle){
+
+    /* check handle */
+    if (handle == 0) return 0;
+
+    int result = 0;
+
+    CBUFF_CRITICAL_SECTION_BEGIN();
+    if (handle->count >= handle->capacity){
+        result = 1;
+    }else{
+        result = 0;
+    }
+    CBUFF_CRITICAL_SECTION_END();
+
+    return result;
+
 }
