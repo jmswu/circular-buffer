@@ -7,6 +7,10 @@ extern "C" {
 
 #include <stdint.h>
 
+#define CBUFF_CRITICAL_SECTION_BEGIN()      do{/* user code here */}while(0)
+#define CBUFF_CRITICAL_SECTION_END()        do{/* user code here */}while(0)
+
+
 typedef struct CBUFF_STRUCT{
     volatile uint16_t head;                 /* pointing to the head of the ring buffer      */
     volatile uint16_t tail;                 /* pointing to the tail of the ring buffer      */
@@ -24,6 +28,7 @@ typedef CBUFF_Struct *CBUFF_Handle;
  * @return CBUFF_Handle                     - handle to ring buffer
  */
 CBUFF_Handle CBUFF_construct(volatile CBUFF_Struct *cbuff, volatile uint8_t *data, uint16_t size);
+
 void CBUFF_put(CBUFF_Handle handle, uint8_t data);
 uint8_t CBUFF_get(CBUFF_Handle handle);
 uint8_t CBUFF_peek(CBUFF_Handle handle);
