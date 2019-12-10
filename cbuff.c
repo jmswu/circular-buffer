@@ -67,13 +67,26 @@ uint8_t CBUFF_peek(CBUFF_Handle handle){
 
 int CBUFF_isFull(CBUFF_Handle handle){
 
-    /* check handle */
-    if (handle == 0) return 0;
-
     int result = 0;
 
     CBUFF_CRITICAL_SECTION_BEGIN();
     if (handle->count >= handle->capacity){
+        result = 1;
+    }else{
+        result = 0;
+    }
+    CBUFF_CRITICAL_SECTION_END();
+
+    return result;
+
+}
+
+int CBUFF_isEmpty(CBUFF_Handle handle){
+
+    int result = 0;
+
+    CBUFF_CRITICAL_SECTION_BEGIN();
+    if (handle->count == 0){
         result = 1;
     }else{
         result = 0;

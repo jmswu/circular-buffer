@@ -56,7 +56,10 @@ uint8_t CBUFF_peek(CBUFF_Handle handle);
  */
 int CBUFF_isFull(CBUFF_Handle handle);
 
-
+/* Tell if the ring buffer is empty
+ * @param CBUFF_Handle handle               - circular buffer handler
+ * @return int                              - 1 = is empty, 0 = is not empty
+ */
 int CBUFF_isEmpty(CBUFF_Handle handle);
 
 
