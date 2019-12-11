@@ -96,3 +96,50 @@ int CBUFF_isEmpty(CBUFF_Handle handle){
     return result;
 
 }
+
+CBUFF_OBJ_Handle CBUFF_OBJ_construct(volatile CBUFF_OBJ_Struct *cbuff, volatile uint8_t *data, uint16_t obj_size, uint16_t capacity){
+
+    /* make sure pointers are valid */
+    if (cbuff == 0) return 0;
+    if (data == 0) return 0;
+
+    cbuff->capacity = capacity;
+    cbuff->count = 0;
+    cbuff->head = 0;
+    cbuff->tail = 0;
+    cbuff->data = data;
+    cbuff->obj_size = obj_size;
+
+    return (CBUFF_OBJ_Handle)cbuff;
+}
+
+void CBUFF_OBJ_put(CBUFF_OBJ_Handle handle, void *obj){
+
+    /* make sure pointers are valid */
+    if (handle == 0) return;
+    if (obj == 0) return;
+
+    /* offset location for the destination data */
+    uint16_t offset = 0;
+
+    /* work out the offset location */
+    offset = handle->head * handle->obj_size;
+
+    /* copy data into the ring buffer */
+    memcpy((void*)(handle->data + offset), (void*)obj, handle->obj_size);
+
+    /* point to next location */
+    handle->head++;
+
+    /* check for overflow */
+    if (handle->head >= handle->capacity){
+        handle->head = 0;
+    }
+
+    /* increase counter */
+    CBUFF_CRITICAL_SECTION_BEGIN();
+    handle->count++;
+    CBUFF_CRITICAL_SECTION_END();
+
+    return;
+}

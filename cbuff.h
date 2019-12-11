@@ -6,6 +6,7 @@ extern "C" {
 #endif
 
 #include <stdint.h>
+#include <string.h>
 
 /* User need to insert codes that apply to the archetechure 
  * that will disable global interrupt
@@ -64,7 +65,7 @@ int CBUFF_isEmpty(CBUFF_Handle handle);
 
 
 typedef struct CBUFF_OBJ_STRUCT{
-    volatile void *obj;
+    volatile void *data;
     volatile uint16_t head;
     volatile uint16_t tail;
     volatile uint16_t capacity;
@@ -73,6 +74,22 @@ typedef struct CBUFF_OBJ_STRUCT{
 } CBUFF_OBJ_Struct;
 
 typedef CBUFF_OBJ_Struct *CBUFF_OBJ_Handle;
+
+/* Construct the initialize the ring buffer
+ * @param volatile CBUFF_OBJ_Struct *cbuff      - pointer to the object ring buffer structure
+ * @param volatile uint8_t *data                - pointer to the ring buffer memory location
+ * @param uint16_t obj_size                     - size in byte of the object
+ * @param uint16_t capacity                     - Maximum number of object that can be stored in the buffer
+ * @return CBUFF_OBJ_Handle                     - handle to object ring buffer
+ */
+CBUFF_OBJ_Handle CBUFF_OBJ_construct(volatile CBUFF_OBJ_Struct *cbuff, volatile uint8_t *data, uint16_t obj_size, uint16_t capacity);
+
+/* Put one object into the circular buffer
+ * @param CBUFF_Handle handle               - object circular buffer handler
+ * @param uint8_t data                      - one byte that need to be put into the buffer
+ * @return                                  - void
+ */
+void CBUFF_OBJ_put(CBUFF_OBJ_Handle handle, void *obj);
 
 #ifdef	__cplusplus
 }
