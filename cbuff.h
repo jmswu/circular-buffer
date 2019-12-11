@@ -98,6 +98,13 @@ void CBUFF_OBJ_put(CBUFF_OBJ_Handle handle, void *obj);
  */
 void CBUFF_OBJ_get(CBUFF_OBJ_Handle handle, void *obj);
 
+/* Get one object from the circular buffer without actually remove it from the ring buffer
+ * @param CBUFF_OBJ_Handle handle           - circular buffer handler
+ * @param void *obj                         - pointer to the object that CBUFF_OBJ_get() write to
+ * @return                                  - void
+ */
+void CBUFF_OBJ_peek(CBUFF_OBJ_Handle handle, void *obj);
+
 
 /* Tell if the ring buffer is full
  * @param CBUFF_OBJ_Handle handle           - object circular buffer handler
