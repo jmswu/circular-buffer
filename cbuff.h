@@ -98,6 +98,21 @@ void CBUFF_OBJ_put(CBUFF_OBJ_Handle handle, void *obj);
  */
 void CBUFF_OBJ_get(CBUFF_OBJ_Handle handle, void *obj);
 
+
+/* Tell if the ring buffer is full
+ * @param CBUFF_OBJ_Handle handle           - object circular buffer handler
+ * @return int                              - 1 = is full, 0 = is not full
+ */
+int CBUFF_OBJ_isFull(CBUFF_OBJ_Handle handle);
+
+/* Tell if the ring buffer is empty
+ * @param CBUFF_OBJ_Handle handle           - object circular buffer handler
+ * @return int                              - 1 = is empty, 0 = is not empty
+ */
+int CBUFF_OBJ_isEmpty(CBUFF_OBJ_Handle handle);
+
+
+
 #ifdef	__cplusplus
 }
 #endif

@@ -176,3 +176,40 @@ void CBUFF_OBJ_get(CBUFF_OBJ_Handle handle, void *obj){
 
     return;
 }
+
+int CBUFF_OBJ_isFull(CBUFF_OBJ_Handle handle){
+
+    /* pointer check */
+    if (handle == 0) return 1;
+
+    int result = 0;
+
+    CBUFF_CRITICAL_SECTION_BEGIN();
+    if (handle->count == handle->capacity){
+        result = 1;
+    }else{
+        result = 0;
+    }
+    CBUFF_CRITICAL_SECTION_END();
+
+    return result;
+}
+
+
+int CBUFF_OBJ_isEmpty(CBUFF_OBJ_Handle handle){
+
+    /* pointer check */
+    if (handle == 0) return 1;
+
+    int result = 0;
+
+    CBUFF_CRITICAL_SECTION_BEGIN();
+    if (handle->count == 0){
+        result = 1;
+    }else{
+        result = 0;
+    }
+    CBUFF_CRITICAL_SECTION_END();
+
+    return result;
+}
