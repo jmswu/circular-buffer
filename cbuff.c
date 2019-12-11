@@ -121,12 +121,13 @@ void CBUFF_OBJ_put(CBUFF_OBJ_Handle handle, void *obj){
 
     /* offset location for the destination data */
     uint16_t offset = 0;
-
-    /* work out the offset location */
     offset = handle->head * handle->obj_size;
 
+    uint8_t *pOjb = (uint8_t *)obj;
+    uint8_t *pBuff = (uint8_t *)(handle->data);
+    
     /* copy data into the ring buffer */
-    memcpy((void*)(handle->data + offset), (void*)obj, handle->obj_size);
+    memcpy(pBuff + offset, pOjb, handle->obj_size);
 
     /* point to next location */
     handle->head++;
@@ -139,6 +140,38 @@ void CBUFF_OBJ_put(CBUFF_OBJ_Handle handle, void *obj){
     /* increase counter */
     CBUFF_CRITICAL_SECTION_BEGIN();
     handle->count++;
+    CBUFF_CRITICAL_SECTION_END();
+
+    return;
+}
+
+void CBUFF_OBJ_get(CBUFF_OBJ_Handle handle, void *obj){
+
+    /* pointer check */
+    if (handle == 0) return;
+    if (obj == 0) return;
+
+    /* offset location for the object */
+    uint16_t offset = 0;
+    offset = handle->obj_size * handle->tail;
+
+    uint8_t *pObj = (uint8_t *)obj;
+    uint8_t *pBuff = (uint8_t *)(handle->data);
+
+    /* copy the data from buffer to the external object */
+    memcpy(pObj, pBuff + offset, handle->obj_size);
+
+    /* point to next location */
+    handle->tail++;
+
+    /* check for overflow */
+    if (handle->tail >= handle->capacity){
+        handle->tail = 0;
+    }
+
+    /* increase counter */
+    CBUFF_CRITICAL_SECTION_BEGIN();
+    handle->tail--;
     CBUFF_CRITICAL_SECTION_END();
 
     return;

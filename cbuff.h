@@ -85,11 +85,18 @@ typedef CBUFF_OBJ_Struct *CBUFF_OBJ_Handle;
 CBUFF_OBJ_Handle CBUFF_OBJ_construct(volatile CBUFF_OBJ_Struct *cbuff, volatile uint8_t *data, uint16_t obj_size, uint16_t capacity);
 
 /* Put one object into the circular buffer
- * @param CBUFF_Handle handle               - object circular buffer handler
- * @param uint8_t data                      - one byte that need to be put into the buffer
+ * @param CBUFF_OBJ_Handle handle           - object circular buffer handler
+ * @param void *obj                         - pointer to the object that need to be put into the buffer
  * @return                                  - void
  */
 void CBUFF_OBJ_put(CBUFF_OBJ_Handle handle, void *obj);
+
+/* Get one object from the circular buffer
+ * @param CBUFF_OBJ_Handle handle           - circular buffer handler
+ * @param void *obj                         - pointer to the object that CBUFF_OBJ_get() write to
+ * @return                                  - void
+ */
+void CBUFF_OBJ_get(CBUFF_OBJ_Handle handle, void *obj);
 
 #ifdef	__cplusplus
 }
