@@ -171,7 +171,7 @@ void CBUFF_OBJ_get(CBUFF_OBJ_Handle handle, void *obj){
 
     /* increase counter */
     CBUFF_CRITICAL_SECTION_BEGIN();
-    handle->tail--;
+    handle->count--;
     CBUFF_CRITICAL_SECTION_END();
 
     return;
