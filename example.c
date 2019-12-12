@@ -26,6 +26,8 @@ int main(char *argv[], int argc){
         printf("%c", CBUFF_get(handle));
     }
 
+    printf("\n");
+    printf("-------------------------\n");
     printf("Testing circular object buffer!\n");
     volatile CBUFF_OBJ_Struct cbuff_obj;
     volatile uint8_t data_obj[10 * sizeof(test_t)];
@@ -38,20 +40,21 @@ int main(char *argv[], int argc){
         test.data2 = i * 10;
         test.data3 = i * 100;
         if (!CBUFF_OBJ_isFull(handle_obj)) CBUFF_OBJ_put(handle_obj, &test);
-        // printf("iteration: %d, isEmpty: %d\n", i, CBUFF_OBJ_isEmpty(handle_obj));
-        // printf("iteration: %d, isFull : %d\n", i, CBUFF_OBJ_isFull(handle_obj));
-        // printf("test: %d, %d, %d\n", test.data1, test.data2, test.data3);
-    }
-
-    for(int i = 0; i < 20; i++){
-        if (!CBUFF_OBJ_isEmpty(handle_obj)){
-            CBUFF_OBJ_get(handle_obj, &test);
-            printf("test: %d, %d, %d\n", test.data1, test.data2, test.data3);
-        }
+        printf("test: %d, %d, %d\n", test.data1, test.data2, test.data3);
         printf("iteration: %d, isEmpty: %d\n", i, CBUFF_OBJ_isEmpty(handle_obj));
         printf("iteration: %d, isFull : %d\n", i, CBUFF_OBJ_isFull(handle_obj));
+        
+    }
+
+
+    while (!CBUFF_OBJ_isEmpty(handle_obj)){
+        CBUFF_OBJ_get(handle_obj, &test);
+        printf("test: %d, %d, %d\n", test.data1, test.data2, test.data3);
+        printf("isEmpty: %d\n", CBUFF_OBJ_isEmpty(handle_obj));
+        printf("isFull : %d\n", CBUFF_OBJ_isFull(handle_obj));
         printf("\n");
     }
+
     
     return 0;
 }
