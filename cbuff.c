@@ -29,7 +29,9 @@ void CBUFF_put(CBUFF_Handle handle, uint8_t data){
 
     /* increase queue data count */
     CBUFF_CRITICAL_SECTION_BEGIN();
-    handle->count++;
+    if (handle->count < handle->capacity){
+        handle->count++;
+    }
     CBUFF_CRITICAL_SECTION_END();
 
     return;
@@ -51,7 +53,9 @@ uint8_t CBUFF_get(CBUFF_Handle handle){
 
     /* decrease queued data count */
     CBUFF_CRITICAL_SECTION_BEGIN();
-    handle->count--;
+    if (handle->count > 0){
+        handle->count--;
+    }
     CBUFF_CRITICAL_SECTION_END();
 
     return data;
