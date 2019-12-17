@@ -143,7 +143,9 @@ void CBUFF_OBJ_put(CBUFF_OBJ_Handle handle, void *obj){
 
     /* increase counter */
     CBUFF_CRITICAL_SECTION_BEGIN();
-    handle->count++;
+    if (handle->count < handle->capacity){
+        handle->count++;
+    }
     CBUFF_CRITICAL_SECTION_END();
 
     return;
@@ -175,7 +177,9 @@ void CBUFF_OBJ_get(CBUFF_OBJ_Handle handle, void *obj){
 
     /* increase counter */
     CBUFF_CRITICAL_SECTION_BEGIN();
-    handle->count--;
+    if (handle->count > 0){
+        handle->count--;
+    }
     CBUFF_CRITICAL_SECTION_END();
 
     return;
