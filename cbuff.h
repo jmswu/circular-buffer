@@ -63,6 +63,12 @@ int CBUFF_isFull(CBUFF_Handle handle);
  */
 int CBUFF_isEmpty(CBUFF_Handle handle);
 
+/*! \brief Return the number of free bytes in the buffer
+ *! \param CBUFF_Handle handle               - circular buffer handler
+ *! \return uint16_t                         - free byte
+ */
+uint16_t CBUFF_getNumOfFreeByte(CBUFF_Handle handle);
+
 /*! Struture for constructing a object ring buffer
  */
 typedef struct CBUFF_OBJ_STRUCT{

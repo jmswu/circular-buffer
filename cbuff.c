@@ -97,6 +97,14 @@ int CBUFF_isEmpty(CBUFF_Handle handle){
 
 }
 
+uint16_t CBUFF_getNumOfFreeByte(CBUFF_Handle handle){
+    uint16_t retval;
+    CBUFF_CRITICAL_SECTION_BEGIN();
+    retval = handle->capacity - handle->count;
+    CBUFF_CRITICAL_SECTION_END();
+    return retval;
+}
+
 CBUFF_OBJ_Handle CBUFF_OBJ_construct(volatile CBUFF_OBJ_Struct *cbuff, volatile uint8_t *data, uint16_t obj_size, uint16_t capacity){
 
     /* make sure pointers are valid */
