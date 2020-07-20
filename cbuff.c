@@ -37,6 +37,25 @@ void CBUFF_put(CBUFF_Handle handle, uint8_t data){
     return;
 }
 
+uint8_t CBUFF_put_block(CBUFF_Handle handle, uint8_t *data, uint8_t size){
+
+    /* null check */
+    if (handle == NULL) return 0;
+    if (data == NULL) return 0;
+
+    uint16_t free_space = CBUFF_getNumOfFreeByte(handle);
+
+    /* make sure there is enought free space */
+    if (free_space < size) return 0;
+
+    /* put data into the buffer */
+    for (uint8_t i = 0; i < size; i++){
+        CBUFF_put(handle, data[i]);
+    }
+
+    return 1;
+}
+
 uint8_t CBUFF_get(CBUFF_Handle handle){
 
     /* check handle */

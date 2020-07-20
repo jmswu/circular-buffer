@@ -13,7 +13,7 @@ int main(char *argv[], int argc){
 
     printf("Testing circular buffer!\n");
     volatile CBUFF_Struct cbuff;    /* ring buffer structure    */
-    volatile uint8_t data[10];      /* ring buffer memory       */
+    volatile uint8_t data[128];      /* ring buffer memory       */
 
     /* construct ring buffer */
     CBUFF_Handle handle = CBUFF_construct(&cbuff, data, sizeof(data)/sizeof(data[0]));
@@ -25,6 +25,21 @@ int main(char *argv[], int argc){
     if (!CBUFF_isFull(handle)) CBUFF_put(handle, 'L');
     if (!CBUFF_isFull(handle)) CBUFF_put(handle, 'O');
     if (!CBUFF_isFull(handle)) CBUFF_put(handle, 'W');
+
+    /* print everything out in the ring buffer */
+    while (!CBUFF_isEmpty(handle)){
+        printf("%c", CBUFF_get(handle));
+    }
+
+    printf("\n");
+    printf("-------------------------\n");
+    printf("Testing multiple data:\n");
+    const char *test_string = "CBUFF_put_block() is working fine";
+    CBUFF_put_block(handle, (uint8_t *)test_string, strlen(test_string));
+
+    while (!CBUFF_isEmpty(handle)){
+        printf("%c", CBUFF_get(handle));
+    }
 
     /* print everything out in the ring buffer */
     while (!CBUFF_isEmpty(handle)){
