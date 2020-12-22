@@ -11,7 +11,7 @@ extern "C" {
 /* Use fast modulo 2 arithmetic. If enabling this 
  * Its capacity is **REQUIRED** to be a power of two.
  */
-#define CBUFF_USE_FAST_MODULO_TWO_ARITHEMTIC
+//#define CBUFF_USE_FAST_MODULO_TWO_ARITHEMTIC
 
 #ifdef CBUFF_USE_FAST_MODULO_TWO_ARITHEMTIC
 #warning "Using fast modulo two arithemtic, buffer capacity is **REQUIRED** to be a power of two."
