@@ -8,6 +8,15 @@ extern "C" {
 #include <stdint.h>
 #include <string.h>
 
+/* Use fast modulo 2 arithmetic. If enabling this 
+ * Its capacity is **REQUIRED** to be a power of two.
+ */
+#define CBUFF_USE_FAST_MODULO_TWO_ARITHEMTIC
+
+#ifdef CBUFF_USE_FAST_MODULO_TWO_ARITHEMTIC
+#warning "Using fast modulo two arithemtic, buffer capacity is **REQUIRED** to be a power of two."
+#endif
+
 /*! User need to insert codes that apply to the archetechure 
  *! that will disable global interrupt
  */
@@ -19,6 +28,9 @@ typedef struct CBUFF_STRUCT{
     volatile uint16_t tail;                 /* pointing to the tail of the ring buffer      */
     volatile uint16_t count;                /* number of byte currented in the ring buffer  */
     volatile uint16_t capacity;             /* the maximum of byte allowed in the buffer    */
+#ifdef CBUFF_USE_FAST_MODULO_TWO_ARITHEMTIC
+    volatile uint16_t mask_fast_arithemtic; /* mask used in fast modulo two arithemtic      */
+#endif
     volatile uint8_t *data;                 /* pointer to the buffer                        */
 }CBUFF_Struct;
 

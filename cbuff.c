@@ -11,6 +11,12 @@ CBUFF_Handle CBUFF_construct(volatile CBUFF_Struct *cbuff, volatile uint8_t *dat
     cbuff->data = data;
     cbuff->head = 0U;
     cbuff->tail=0U;
+
+#ifdef CBUFF_USE_FAST_MODULO_TWO_ARITHEMTIC
+    /* calculate the mask use for the fast modulo 2 arithmetic */
+    cbuff->mask_fast_arithemtic = cbuff->capacity - 1;
+#endif
+
     return (CBUFF_Handle)cbuff;
 }
 
@@ -22,10 +28,16 @@ void CBUFF_put(CBUFF_Handle handle, uint8_t data){
     /* put data into the buffer */
     handle->data[handle->head++] = data;
 
+#ifdef CBUFF_USE_FAST_MODULO_TWO_ARITHEMTIC
+    /* check for overflow */
+    handle->head = handle->head & handle->mask_fast_arithemtic;
+#else
     /* check for overflow */
     if (handle->head >= handle->capacity){
         handle->head = 0;
     }
+#endif
+
 
     /* increase queue data count */
     CBUFF_CRITICAL_SECTION_BEGIN();
@@ -65,10 +77,15 @@ uint8_t CBUFF_get(CBUFF_Handle handle){
     uint8_t data = 0;
     data = handle->data[handle->tail++];
 
+#ifdef CBUFF_USE_FAST_MODULO_TWO_ARITHEMTIC
+    /* check for overflow */
+    handle->tail = handle->tail & handle->mask_fast_arithemtic;
+#else
     /* check for overflow */
     if (handle->tail >= handle->capacity){
         handle->tail = 0;
     }
+#endif
 
     /* decrease queued data count */
     CBUFF_CRITICAL_SECTION_BEGIN();
