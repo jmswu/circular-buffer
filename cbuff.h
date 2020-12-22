@@ -39,7 +39,7 @@ CBUFF_Handle CBUFF_construct(volatile CBUFF_Struct *cbuff, volatile uint8_t *dat
  */
 void CBUFF_put(CBUFF_Handle handle, uint8_t data);
 
-/*! \brief  Put one byte into the circular buffer
+/*! \brief  Put one block of data into the circular buffer
  *! \param CBUFF_Handle handle               - circular buffer handler
  *! \param uint8_t *data                     - pointer to the data
  *! \param uint8_t size                      - size of the data
