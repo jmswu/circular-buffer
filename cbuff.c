@@ -285,17 +285,20 @@ int CBUFF_OBJ_isEmpty(CBUFF_OBJ_Handle handle){
     /* pointer check */
     if (handle == 0) return 1;
 
-    int result = 0;
+    const int EMPTY = 1;
+    const int NOT_EMPTY = 0;
+
+    int isEmpty = NOT_EMPTY;
 
     CBUFF_CRITICAL_SECTION_BEGIN();
     if (handle->count == 0){
-        result = 1;
+        isEmpty = EMPTY;
     }else{
-        result = 0;
+        isEmpty = NOT_EMPTY;
     }
     CBUFF_CRITICAL_SECTION_END();
 
-    return result;
+    return isEmpty;
 }
 
 uint16_t CBUFF_OBJ_getNumOfFreeByte(CBUFF_Handle handle){
