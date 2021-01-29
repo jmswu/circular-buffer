@@ -123,17 +123,22 @@ int CBUFF_isFull(CBUFF_Handle handle){
 
 int CBUFF_isEmpty(CBUFF_Handle handle){
 
-    int result = 0;
+    const int EMPTY = 1;
+    const int NOT_EMPTY = 0;
+
+    if (handle == 0) return EMPTY;
+
+    int isEmpty = NOT_EMPTY;
 
     CBUFF_CRITICAL_SECTION_BEGIN();
     if (handle->count == 0){
-        result = 1;
+        isEmpty = EMPTY;
     }else{
-        result = 0;
+        isEmpty = NOT_EMPTY;
     }
     CBUFF_CRITICAL_SECTION_END();
 
-    return result;
+    return isEmpty;
 
 }
 
