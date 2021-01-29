@@ -299,7 +299,10 @@ int CBUFF_OBJ_isEmpty(CBUFF_OBJ_Handle handle){
 }
 
 uint16_t CBUFF_OBJ_getNumOfFreeByte(CBUFF_Handle handle){
-    uint16_t retval;
+    uint16_t retval = 0;
+
+    if (handle == 0) return retval;
+
     CBUFF_CRITICAL_SECTION_BEGIN();
     retval = handle->capacity - handle->count;
     CBUFF_CRITICAL_SECTION_END();
