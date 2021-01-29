@@ -266,17 +266,20 @@ int CBUFF_OBJ_isFull(CBUFF_OBJ_Handle handle){
     /* pointer check */
     if (handle == 0) return 1;
 
-    int result = 0;
+    const int FULL = 1;
+    const int NOT_FULL = 0;
+
+    int isFull = NOT_FULL;
 
     CBUFF_CRITICAL_SECTION_BEGIN();
     if (handle->count == handle->capacity){
-        result = 1;
+        isFull = FULL;
     }else{
-        result = 0;
+        isFull = NOT_FULL;
     }
     CBUFF_CRITICAL_SECTION_END();
 
-    return result;
+    return isFull;
 }
 
 
