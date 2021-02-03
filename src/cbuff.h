@@ -119,9 +119,9 @@ CBUFF_OBJ_Handle CBUFF_OBJ_construct(volatile CBUFF_OBJ_Struct *cbuff, volatile 
 /*! \brief Put one object into the circular buffer
  *! \param CBUFF_OBJ_Handle handle           - object circular buffer handler
  *! \param void *obj                         - pointer to the object that need to be put into the buffer
- *! \return                                  - void
+ *! \return                                  - success = 1, failed = 0;
  */
-void CBUFF_OBJ_put(CBUFF_OBJ_Handle handle, void *obj);
+int CBUFF_OBJ_put(CBUFF_OBJ_Handle handle, void *obj);
 
 /*! \brief Get one object from the circular buffer
  *! \param CBUFF_OBJ_Handle handle           - circular buffer handler

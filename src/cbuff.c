@@ -187,11 +187,16 @@ CBUFF_OBJ_Handle CBUFF_OBJ_construct(volatile CBUFF_OBJ_Struct *cbuff, volatile 
     return (CBUFF_OBJ_Handle)cbuff;
 }
 
-void CBUFF_OBJ_put(CBUFF_OBJ_Handle handle, void *obj){
+int CBUFF_OBJ_put(CBUFF_OBJ_Handle handle, void *obj){
+
+    const int SUCCESS = 1;
+    const int FAILED = 0;
 
     /* make sure pointers are valid */
-    if (handle == 0) return;
-    if (obj == 0) return;
+    if (handle == 0) return FAILED;
+    if (obj == 0) return FAILED;
+    
+    if (CBUFF_OBJ_isFull(handle)) return FAILED;
 
     /* offset location for the destination data */
     uint16_t offset = 0;
@@ -218,7 +223,7 @@ void CBUFF_OBJ_put(CBUFF_OBJ_Handle handle, void *obj){
     }
     CBUFF_CRITICAL_SECTION_END();
 
-    return;
+    return SUCCESS;
 }
 
 int CBUFF_OBJ_get(CBUFF_OBJ_Handle handle, void *obj){
