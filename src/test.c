@@ -8,6 +8,7 @@ void TEST_ADD_DATA_BUFFER_FULL(void);
 void TEST_ADD_DATA_OVERFLOW(void);
 void TEST_REMOVE_DATA(void);
 void TEST_REMOVE_DATA_BUFFER_EMPTY(void);
+void TEST_REMOVE_DATA_UNDERFLOW(void);
 
 int main(int argc, char ** argv){
 
@@ -21,6 +22,7 @@ int main(int argc, char ** argv){
     TEST_ADD_DATA_OVERFLOW();
     TEST_REMOVE_DATA();
     TEST_REMOVE_DATA_BUFFER_EMPTY();
+    TEST_REMOVE_DATA_UNDERFLOW();
 
     printf("done!\n\r");
 
@@ -159,6 +161,41 @@ void TEST_ADD_DATA_OVERFLOW(void)
     TEST_ASSERT_EQUAL(BUFFER_SIZE, handle->count);
     TEST_ASSERT_EQUAL(0, handle->head);
     TEST_ASSERT_EQUAL(BUFFER_SIZE - 1, handle->data[BUFFER_SIZE - 1]);
+}
+
+void TEST_REMOVE_DATA_UNDERFLOW(void)
+{
+    const uint16_t BUFFER_SIZE = 5;
+    volatile uint8_t buffer[BUFFER_SIZE];
+    volatile CBUFF_Struct bufferStruct;
+    volatile CBUFF_Handle handle = CBUFF_construct(&bufferStruct, buffer, BUFFER_SIZE);
+
+    for(uint16_t i = 0; i < BUFFER_SIZE; i++)
+    {
+        CBUFF_put(handle, (uint8_t)(i + 1));
+    }
+
+    for(uint16_t i = 0; i < BUFFER_SIZE; i++)
+    {
+        CBUFF_get(handle);
+    }
+
+    TEST_ASSERT_EQUAL(0, handle->count);
+    TEST_ASSERT_EQUAL(0, handle->tail);
+
+    uint8_t tmpData;
+
+    // get one more than already put in
+    tmpData = CBUFF_get(handle);
+    TEST_ASSERT_EQUAL(0, handle->count);
+    TEST_ASSERT_EQUAL(0, handle->tail);
+    TEST_ASSERT_EQUAL(0, tmpData);
+
+    // get another one more than already put in
+    tmpData = CBUFF_get(handle);
+    TEST_ASSERT_EQUAL(0, handle->count);
+    TEST_ASSERT_EQUAL(0, handle->tail);
+    TEST_ASSERT_EQUAL(0, tmpData);
 }
 
 void setUp(void)

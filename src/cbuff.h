@@ -62,8 +62,8 @@ void CBUFF_put(CBUFF_Handle handle, uint8_t data);
 uint8_t CBUFF_put_block(CBUFF_Handle handle, uint8_t *data, uint8_t size);
 
 /*! \brief Get one byte from the circular buffer
- *!         User must check there is data in the buffer
-            Before calling this fucntion
+ *!         If there is no more data in the buffer
+ *!         It will always return 0 with no warnings
  *! \param CBUFF_Handle handle               - circular buffer handler
  *! \return uint8_t                          - one byte read from the circular buffer
  */

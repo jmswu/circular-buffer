@@ -76,6 +76,8 @@ uint8_t CBUFF_get(CBUFF_Handle handle){
     /* check handle */
     if (handle == 0) return 0;
 
+    if (CBUFF_isEmpty(handle)) return 0;
+
     /* get one byte */
     uint8_t data = 0;
     data = handle->data[handle->tail++];
