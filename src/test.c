@@ -45,7 +45,7 @@ int printEndingMessage(void)
 
 void TEST_HANDLE_CREATION(void)
 {
-    const uint16_t BUFFER_SIZE = 30;
+    const uint16_t BUFFER_SIZE = 32;
     volatile uint8_t buffer[BUFFER_SIZE];
     volatile CBUFF_Struct bufferStruct;
     
@@ -66,7 +66,7 @@ void TEST_HANDLE_CREATION(void)
 
 void TEST_ADD_DATA(void)
 {
-    const uint16_t BUFFER_SIZE = 30;
+    const uint16_t BUFFER_SIZE = 32;
     volatile uint8_t buffer[BUFFER_SIZE];
     volatile CBUFF_Struct bufferStruct;
     volatile CBUFF_Handle handle = CBUFF_construct(&bufferStruct, buffer, BUFFER_SIZE);
@@ -90,7 +90,7 @@ void TEST_ADD_DATA(void)
 
 void TEST_REMOVE_DATA(void)
 {
-    const uint16_t BUFFER_SIZE = 30;
+    const uint16_t BUFFER_SIZE = 32;
     volatile uint8_t buffer[BUFFER_SIZE];
     volatile CBUFF_Struct bufferStruct;
     volatile CBUFF_Handle handle = CBUFF_construct(&bufferStruct, buffer, BUFFER_SIZE);
@@ -114,7 +114,7 @@ void TEST_REMOVE_DATA(void)
 
 void TEST_ADD_DATA_BUFFER_FULL(void)
 {
-    const uint16_t BUFFER_SIZE = 0xFFFF;
+    const uint16_t BUFFER_SIZE = 256;
     volatile uint8_t buffer[BUFFER_SIZE];
     volatile CBUFF_Struct bufferStruct;
     volatile CBUFF_Handle handle = CBUFF_construct(&bufferStruct, buffer, BUFFER_SIZE);
@@ -131,7 +131,7 @@ void TEST_ADD_DATA_BUFFER_FULL(void)
 
 void TEST_REMOVE_DATA_BUFFER_EMPTY(void)
 {
-    const uint16_t BUFFER_SIZE = 0xFFFF;
+    const uint16_t BUFFER_SIZE = 256;
     volatile uint8_t buffer[BUFFER_SIZE];
     volatile CBUFF_Struct bufferStruct;
     volatile CBUFF_Handle handle = CBUFF_construct(&bufferStruct, buffer, BUFFER_SIZE);
@@ -153,7 +153,7 @@ void TEST_REMOVE_DATA_BUFFER_EMPTY(void)
 
 void TEST_ADD_DATA_OVERFLOW(void)
 {
-    const uint16_t BUFFER_SIZE = 5;
+    const uint16_t BUFFER_SIZE = 8;
     volatile uint8_t buffer[BUFFER_SIZE];
     volatile CBUFF_Struct bufferStruct;
     volatile CBUFF_Handle handle = CBUFF_construct(&bufferStruct, buffer, BUFFER_SIZE);
@@ -179,7 +179,7 @@ void TEST_ADD_DATA_OVERFLOW(void)
 
 void TEST_REMOVE_DATA_UNDERFLOW(void)
 {
-    const uint16_t BUFFER_SIZE = 5;
+    const uint16_t BUFFER_SIZE = 8;
     volatile uint8_t buffer[BUFFER_SIZE];
     volatile CBUFF_Struct bufferStruct;
     volatile CBUFF_Handle handle = CBUFF_construct(&bufferStruct, buffer, BUFFER_SIZE);
@@ -214,7 +214,7 @@ void TEST_REMOVE_DATA_UNDERFLOW(void)
 
 void TEST_PEEK(void)
 {
-    const uint16_t BUFFER_SIZE = 12;
+    const uint16_t BUFFER_SIZE = 16;
     volatile uint8_t buffer[BUFFER_SIZE];
     volatile CBUFF_Struct bufferStruct;
     volatile CBUFF_Handle handle = CBUFF_construct(&bufferStruct, buffer, BUFFER_SIZE);
@@ -243,7 +243,7 @@ void TEST_PEEK(void)
 
 void TEST_PEEK_UNDERFLOW(void)
 {
-    const uint16_t BUFFER_SIZE = 3;
+    const uint16_t BUFFER_SIZE = 8;
     volatile uint8_t buffer[BUFFER_SIZE];
     volatile CBUFF_Struct bufferStruct;
     volatile CBUFF_Handle handle = CBUFF_construct(&bufferStruct, buffer, BUFFER_SIZE);
@@ -256,7 +256,7 @@ void TEST_PEEK_UNDERFLOW(void)
 
 void TEST_GET_FREE_BYTE(void)
 {
-    const uint16_t BUFFER_SIZE = 3;
+    const uint16_t BUFFER_SIZE = 4;
     volatile uint8_t buffer[BUFFER_SIZE];
     volatile CBUFF_Struct bufferStruct;
     volatile CBUFF_Handle handle = CBUFF_construct(&bufferStruct, buffer, BUFFER_SIZE);
