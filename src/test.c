@@ -10,6 +10,7 @@ void TEST_REMOVE_DATA(void);
 void TEST_REMOVE_DATA_BUFFER_EMPTY(void);
 void TEST_REMOVE_DATA_UNDERFLOW(void);
 void TEST_PEEK(void);
+void TEST_GET_FREE_BYTE(void);
 
 int printEndingMessage(void);
 
@@ -27,7 +28,7 @@ int main(int argc, char ** argv){
     TEST_REMOVE_DATA_BUFFER_EMPTY();
     TEST_REMOVE_DATA_UNDERFLOW();
     TEST_PEEK();
-    
+    TEST_GET_FREE_BYTE();
 
     return printEndingMessage();
 }
@@ -236,6 +237,32 @@ void TEST_PEEK(void)
     /* remove one byte */
     CBUFF_get(handle);
     TEST_ASSERT_EQUAL(20, CBUFF_peek(handle));  /* should return the first available data   */
+}
+
+void TEST_GET_FREE_BYTE(void)
+{
+    const uint16_t BUFFER_SIZE = 3;
+    volatile uint8_t buffer[BUFFER_SIZE];
+    volatile CBUFF_Struct bufferStruct;
+    volatile CBUFF_Handle handle = CBUFF_construct(&bufferStruct, buffer, BUFFER_SIZE);
+
+    CBUFF_put(handle, 10);
+    TEST_ASSERT_EQUAL(BUFFER_SIZE - 1, CBUFF_getNumOfFreeByte(handle));
+
+    CBUFF_put(handle, 20);
+    TEST_ASSERT_EQUAL(BUFFER_SIZE - 2, CBUFF_getNumOfFreeByte(handle));
+
+    CBUFF_put(handle, 30);
+    TEST_ASSERT_EQUAL(BUFFER_SIZE - 3, CBUFF_getNumOfFreeByte(handle));
+
+    CBUFF_get(handle);
+    TEST_ASSERT_EQUAL(BUFFER_SIZE - 2, CBUFF_getNumOfFreeByte(handle));
+
+    CBUFF_get(handle);
+    TEST_ASSERT_EQUAL(BUFFER_SIZE - 1, CBUFF_getNumOfFreeByte(handle));
+
+    CBUFF_get(handle);
+    TEST_ASSERT_EQUAL(BUFFER_SIZE, CBUFF_getNumOfFreeByte(handle));
 }
 
 void setUp(void)
