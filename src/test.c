@@ -80,11 +80,6 @@ void TEST_ADD_DATA_BUFFER_FULL(void)
     TEST_ASSERT_EQUAL(0, CBUFF_isEmpty(handle));
 }
 
-void TEST_ADD_DATA_OVERFLOW(void)
-{
-
-}
-
 void setUp(void)
 {
 
