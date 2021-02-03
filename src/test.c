@@ -4,7 +4,7 @@
 
 void TEST_HANDLE_CREATION(void);
 void TEST_ADD_DATA(void);
-void TEST_ADD_DATA_OVERFLOW(void);
+void TEST_ADD_DATA_BUFFER_FULL(void);
 
 int main(int argc, char ** argv){
 
@@ -14,6 +14,7 @@ int main(int argc, char ** argv){
 
     TEST_HANDLE_CREATION();
     TEST_ADD_DATA();
+    TEST_ADD_DATA_BUFFER_FULL();
 
     printf("done!\n\r");
 
@@ -61,9 +62,27 @@ void TEST_ADD_DATA(void)
     TEST_ASSERT_EQUAL(0, handle->tail);
 }
 
+void TEST_ADD_DATA_BUFFER_FULL(void)
+{
+    const uint16_t BUFFER_SIZE = 5;
+    volatile uint8_t buffer[BUFFER_SIZE];
+    volatile CBUFF_Struct bufferStruct;
+    volatile CBUFF_Handle handle = CBUFF_construct(&bufferStruct, buffer, BUFFER_SIZE);
+
+    CBUFF_put(handle, 1);
+    CBUFF_put(handle, 2);
+    CBUFF_put(handle, 3);
+    CBUFF_put(handle, 4);
+    CBUFF_put(handle, 5);
+
+    TEST_ASSERT_EQUAL(5, handle->count);
+    TEST_ASSERT_EQUAL(1, CBUFF_isFull(handle));
+    TEST_ASSERT_EQUAL(0, CBUFF_isEmpty(handle));
+}
+
 void TEST_ADD_DATA_OVERFLOW(void)
 {
-    
+
 }
 
 void setUp(void)
