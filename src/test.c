@@ -3,6 +3,7 @@
 #include "Unity/unity.h"
 
 void TEST_HANDLE_CREATION(void);
+
 void TEST_ADD_DATA(void);
 void TEST_ADD_DATA_BUFFER_FULL(void);
 
@@ -36,6 +37,10 @@ void TEST_HANDLE_CREATION(void)
 
     TEST_ASSERT_EQUAL(BUFFER_SIZE, CBUFF_construct(&bufferStruct, buffer, BUFFER_SIZE)->capacity);
     TEST_ASSERT_EQUAL(buffer, CBUFF_construct(&bufferStruct, buffer, BUFFER_SIZE)->data);
+
+    TEST_ASSERT_EQUAL(0, CBUFF_construct(&bufferStruct, buffer, BUFFER_SIZE)->count);
+    TEST_ASSERT_EQUAL(0, CBUFF_construct(&bufferStruct, buffer, BUFFER_SIZE)->head);
+    TEST_ASSERT_EQUAL(0, CBUFF_construct(&bufferStruct, buffer, BUFFER_SIZE)->tail);
 }
 
 void TEST_ADD_DATA(void)
