@@ -3,9 +3,9 @@
 #include "Unity/unity.h"
 
 void TEST_HANDLE_CREATION(void);
-
 void TEST_ADD_DATA(void);
 void TEST_ADD_DATA_BUFFER_FULL(void);
+void TEST_ADD_DATA_OVERFLOW(void);
 
 int main(int argc, char ** argv){
 
@@ -16,6 +16,7 @@ int main(int argc, char ** argv){
     TEST_HANDLE_CREATION();
     TEST_ADD_DATA();
     TEST_ADD_DATA_BUFFER_FULL();
+    TEST_ADD_DATA_OVERFLOW();
 
     printf("done!\n\r");
 
@@ -69,20 +70,24 @@ void TEST_ADD_DATA(void)
 
 void TEST_ADD_DATA_BUFFER_FULL(void)
 {
-    const uint16_t BUFFER_SIZE = 5;
+    const uint16_t BUFFER_SIZE = 0xFFFF;
     volatile uint8_t buffer[BUFFER_SIZE];
     volatile CBUFF_Struct bufferStruct;
     volatile CBUFF_Handle handle = CBUFF_construct(&bufferStruct, buffer, BUFFER_SIZE);
 
-    CBUFF_put(handle, 1);
-    CBUFF_put(handle, 2);
-    CBUFF_put(handle, 3);
-    CBUFF_put(handle, 4);
-    CBUFF_put(handle, 5);
+    for(uint16_t i = 0; i < BUFFER_SIZE; i++)
+    {
+        CBUFF_put(handle, (uint8_t)i);
+    }
 
-    TEST_ASSERT_EQUAL(5, handle->count);
+    TEST_ASSERT_EQUAL(BUFFER_SIZE, handle->count);
     TEST_ASSERT_EQUAL(1, CBUFF_isFull(handle));
     TEST_ASSERT_EQUAL(0, CBUFF_isEmpty(handle));
+}
+
+void TEST_ADD_DATA_OVERFLOW(void)
+{
+
 }
 
 void setUp(void)
