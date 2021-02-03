@@ -1,4 +1,6 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
 #include "cbuff.h"
 #include "Unity/unity.h"
 
@@ -12,6 +14,7 @@ void TEST_REMOVE_DATA_UNDERFLOW(void);
 void TEST_PEEK(void);
 void TEST_PEEK_UNDERFLOW(void);
 void TEST_GET_FREE_BYTE(void);
+void TEST_RANDOM_DATA(void);
 
 int printEndingMessage(void);
 
@@ -31,6 +34,7 @@ int main(int argc, char ** argv){
     TEST_PEEK();
     TEST_PEEK_UNDERFLOW();
     TEST_GET_FREE_BYTE();
+    TEST_RANDOM_DATA();
 
     return printEndingMessage();
 }
@@ -280,9 +284,38 @@ void TEST_GET_FREE_BYTE(void)
     TEST_ASSERT_EQUAL(BUFFER_SIZE, CBUFF_getNumOfFreeByte(handle));
 }
 
+void TEST_RANDOM_DATA(void)
+{
+    const uint16_t BUFFER_SIZE = 2048;
+    volatile uint8_t buffer[BUFFER_SIZE];
+    volatile CBUFF_Struct bufferStruct;
+    volatile CBUFF_Handle handle = CBUFF_construct(&bufferStruct, buffer, BUFFER_SIZE);
+
+    /* make some random data */
+    srand(time(NULL));
+    uint8_t tmpData[256] = {0};
+    for(uint16_t i = 0; i < sizeof(tmpData); i++)
+    {
+        tmpData[i] = rand() % 0xFF;
+    }
+
+    /* put data into the buffer */
+    for(uint16_t i = 0; i < sizeof(tmpData); i++)
+    {
+        CBUFF_put(handle, tmpData[i]);
+    }
+
+    /* get data out */
+    for(uint16_t i = 0; i < sizeof(tmpData); i++)
+    {
+        TEST_ASSERT_EQUAL(tmpData[i], CBUFF_get(handle));
+    }
+    
+}
+
 void setUp(void)
 {
-
+    
 }
 
 void tearDown(void)
