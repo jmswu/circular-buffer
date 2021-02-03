@@ -83,17 +83,7 @@ void TEST_REMOVE_DATA(void)
     uint8_t test_data2 = 100;
 
     CBUFF_put(handle, test_data1);
-    //TEST_ASSERT_EQUAL(1, handle->count);
-    //TEST_ASSERT_EQUAL(test_data1, handle->data[0]);
-    //TEST_ASSERT_EQUAL(1, handle->head);
-    //TEST_ASSERT_EQUAL(0, handle->tail);
-
     CBUFF_put(handle, test_data2);
-    //TEST_ASSERT_EQUAL(2, handle->count);
-    //TEST_ASSERT_EQUAL(test_data1, handle->data[0]);
-    //TEST_ASSERT_EQUAL(test_data2, handle->data[1]);
-    //TEST_ASSERT_EQUAL(2, handle->head);
-    //TEST_ASSERT_EQUAL(0, handle->tail);
 
     TEST_ASSERT_EQUAL(test_data1, CBUFF_get(handle));
     TEST_ASSERT_EQUAL(1, handle->count);
