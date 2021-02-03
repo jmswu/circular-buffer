@@ -10,6 +10,8 @@ void TEST_REMOVE_DATA(void);
 void TEST_REMOVE_DATA_BUFFER_EMPTY(void);
 void TEST_REMOVE_DATA_UNDERFLOW(void);
 
+int printEndingMessage(void);
+
 int main(int argc, char ** argv){
 
     /* dummp code to get rid of warnings */
@@ -24,8 +26,16 @@ int main(int argc, char ** argv){
     TEST_REMOVE_DATA_BUFFER_EMPTY();
     TEST_REMOVE_DATA_UNDERFLOW();
 
-    printf("done!\n\r");
+    
 
+    return printEndingMessage();
+}
+
+int printEndingMessage(void)
+{
+    printf("-------------------------------------------------------------------------\n");
+    printf("If you ONLY see this and no other message, it means all tests are passed!\n");
+    printf("-------------------------------------------------------------------------\n");
     return 0;
 }
 
