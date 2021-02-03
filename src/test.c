@@ -87,6 +87,26 @@ void TEST_ADD_DATA_BUFFER_FULL(void)
 
 void TEST_ADD_DATA_OVERFLOW(void)
 {
+    const uint16_t BUFFER_SIZE = 5;
+    volatile uint8_t buffer[BUFFER_SIZE];
+    volatile CBUFF_Struct bufferStruct;
+    volatile CBUFF_Handle handle = CBUFF_construct(&bufferStruct, buffer, BUFFER_SIZE);
+
+    for(uint16_t i = 0; i < BUFFER_SIZE; i++)
+    {
+        CBUFF_put(handle, (uint8_t)i);
+    }
+
+    // put one more in the buffer
+    CBUFF_put(handle, 10);
+
+    TEST_ASSERT_EQUAL(BUFFER_SIZE, handle->count);
+    TEST_ASSERT_EQUAL(0, handle->head);
+
+    // put another one more in the buffer
+    CBUFF_put(handle, 10);
+    TEST_ASSERT_EQUAL(BUFFER_SIZE, handle->count);
+    TEST_ASSERT_EQUAL(0, handle->head);
 
 }
 

@@ -25,6 +25,9 @@ void CBUFF_put(CBUFF_Handle handle, uint8_t data){
     /* check handle */
     if (handle == 0) return;
 
+    /* chekc if full */
+    if (CBUFF_isFull(handle)) return;
+
     /* put data into the buffer */
     handle->data[handle->head++] = data;
 
