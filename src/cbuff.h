@@ -126,9 +126,9 @@ void CBUFF_OBJ_put(CBUFF_OBJ_Handle handle, void *obj);
 /*! \brief Get one object from the circular buffer
  *! \param CBUFF_OBJ_Handle handle           - circular buffer handler
  *! \param void *obj                         - pointer to the object that CBUFF_OBJ_get() write to
- *! \return                                  - void
+ *! \return                                  - success = 1, failed = 0;
  */
-void CBUFF_OBJ_get(CBUFF_OBJ_Handle handle, void *obj);
+int CBUFF_OBJ_get(CBUFF_OBJ_Handle handle, void *obj);
 
 /*! \brief Get one object from the circular buffer without actually remove it from the ring buffer
  *! \param CBUFF_OBJ_Handle handle           - circular buffer handler
