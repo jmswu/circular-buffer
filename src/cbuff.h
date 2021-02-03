@@ -70,6 +70,7 @@ uint8_t CBUFF_put_block(CBUFF_Handle handle, uint8_t *data, uint8_t size);
 uint8_t CBUFF_get(CBUFF_Handle handle);
 
 /*! \brief Get one byte from the circular buffer without actually remove it from the ring buffer
+ *!         It will return 0 if buffer is empty, with no warnings
  *! \param CBUFF_Handle handle               - circular buffer handler
  *! \return uint8_t                          - one byte read from the circular buffer
  */

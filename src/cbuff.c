@@ -107,7 +107,14 @@ uint8_t CBUFF_peek(CBUFF_Handle handle){
     /* check handle */
     if (handle == 0) return 0;
 
-    return handle->data[handle->tail];
+    if (CBUFF_isEmpty(handle))
+    {
+        return 0;
+    }
+    else
+    {
+        return handle->data[handle->tail];
+    }
 }
 
 int CBUFF_isFull(CBUFF_Handle handle){
