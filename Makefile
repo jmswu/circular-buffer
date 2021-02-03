@@ -9,7 +9,7 @@ FOLDER_BUILD 	:= build
 FOLDER_SOURCE_1 := src
 FOLDER_SOURCE_2 := ${FOLDER_SOURCE_1}/Unity
 # define application name here
-TARGET_NAME 	:= example
+TARGET_NAME 	:= unit_test
 
 #----------------------------------
 # Don't change anything below here
