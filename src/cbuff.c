@@ -264,11 +264,16 @@ int CBUFF_OBJ_get(CBUFF_OBJ_Handle handle, void *obj){
     return SUCCESS;
 }
 
-void CBUFF_OBJ_peek(CBUFF_OBJ_Handle handle, void *obj){
+int CBUFF_OBJ_peek(CBUFF_OBJ_Handle handle, void *obj){
+
+    const int SUCCESS = 1;
+    const int FAILED = 0;
 
     /* pointer check */
-    if (handle == 0) return;
-    if (obj == 0) return;
+    if (handle == 0) return FAILED;
+    if (obj == 0) return FAILED;
+
+    if (CBUFF_OBJ_isEmpty(handle)) return FAILED;
 
     /* offset location for the object */
     uint16_t offset = 0;
@@ -280,7 +285,7 @@ void CBUFF_OBJ_peek(CBUFF_OBJ_Handle handle, void *obj){
     /* copy the data from buffer to the external object */
     memcpy(pObj, pBuff + offset, handle->obj_size);
 
-    return;
+    return SUCCESS;
 }
 
 int CBUFF_OBJ_isFull(CBUFF_OBJ_Handle handle){
