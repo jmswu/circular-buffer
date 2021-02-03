@@ -4,6 +4,7 @@
 
 void TEST_HANDLE_CREATION(void);
 void TEST_ADD_DATA(void);
+void TEST_ADD_DATA_OVERFLOW(void);
 
 int main(int argc, char ** argv){
 
@@ -58,6 +59,11 @@ void TEST_ADD_DATA(void)
     TEST_ASSERT_EQUAL(test_data2, handle->data[1]);
     TEST_ASSERT_EQUAL(2, handle->head);
     TEST_ASSERT_EQUAL(0, handle->tail);
+}
+
+void TEST_ADD_DATA_OVERFLOW(void)
+{
+    
 }
 
 void setUp(void)

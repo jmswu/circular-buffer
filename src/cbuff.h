@@ -45,6 +45,8 @@ typedef CBUFF_Struct *CBUFF_Handle;
 CBUFF_Handle CBUFF_construct(volatile CBUFF_Struct *cbuff, volatile uint8_t *data, uint16_t size);
 
 /*! \brief  Put one byte into the circular buffer
+ *!         User must check there is space left in the buffer
+            before putting more data into the buffer
  *! \param CBUFF_Handle handle               - circular buffer handler
  *! \param uint8_t data                      - one byte that need to be put into the buffer
  *! \return                                  - void
