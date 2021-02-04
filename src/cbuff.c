@@ -1,5 +1,14 @@
 #include "cbuff.h"
 
+#define VER_MAJOR   (0U)
+#define VER_MINOR   (1U)
+#define VER_PATCH   (1U)
+#define VER_NUM     ((VER_MAJOR << 16) + (VER_MINOR << 8) + (VER_PATCH))
+
+uint32_t CBUFF_getVerNumber(void){
+    return VER_NUM;
+}
+
 CBUFF_Handle CBUFF_construct(volatile CBUFF_Struct *cbuff, volatile uint8_t *data, uint16_t size){
 
     /* make sure pointers are valid */

@@ -36,6 +36,8 @@ typedef struct CBUFF_STRUCT{
 
 typedef CBUFF_Struct *CBUFF_Handle;
 
+uint32_t CBUFF_getVerNumber(void);
+
 /*! \brief Construct the initialize the ring buffer
  *! \param volatile CBUFF_Struct *cbuff      - pointer to the ring buffer structure
  *! \param volatile uint8_t *data            - pointer to the ring buffer memory location
