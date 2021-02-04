@@ -16,7 +16,15 @@ void TEST_PEEK_UNDERFLOW(void);
 void TEST_GET_FREE_BYTE(void);
 void TEST_RANDOM_DATA(void);
 
+void TEST_OBJ_HANDLE_CREATION(void);
+
 int printEndingMessage(void);
+
+typedef struct {
+    uint8_t data1;
+    uint16_t data2;
+    uint32_t data3;
+}testObjType;
 
 int main(int argc, char ** argv){
 
@@ -35,6 +43,8 @@ int main(int argc, char ** argv){
     TEST_PEEK_UNDERFLOW();
     TEST_GET_FREE_BYTE();
     TEST_RANDOM_DATA();
+
+    TEST_OBJ_HANDLE_CREATION();
 
     /* CBUFF_OBJ is not tested */
 
@@ -313,6 +323,22 @@ void TEST_RANDOM_DATA(void)
         TEST_ASSERT_EQUAL(tmpData[i], CBUFF_get(handle));
     }
     
+}
+
+void TEST_OBJ_HANDLE_CREATION(void)
+{
+    const int CAPACITY = 4;
+    const int OBJECT_SIZE = sizeof(testObjType);
+    volatile uint8_t buffer[CAPACITY * OBJECT_SIZE];
+    CBUFF_OBJ_Struct buffStruct;
+    CBUFF_OBJ_Handle handle = CBUFF_OBJ_construct(&buffStruct, buffer, OBJECT_SIZE, CAPACITY);
+
+    TEST_ASSERT_NOT_EQUAL((CBUFF_OBJ_Handle)NULL, handle);
+
+    TEST_ASSERT_EQUAL((CBUFF_OBJ_Handle)NULL, CBUFF_OBJ_construct(NULL, buffer, OBJECT_SIZE, CAPACITY));
+    TEST_ASSERT_EQUAL((CBUFF_OBJ_Handle)NULL, CBUFF_OBJ_construct(&buffStruct, NULL, OBJECT_SIZE, CAPACITY));
+    TEST_ASSERT_EQUAL((CBUFF_OBJ_Handle)NULL, CBUFF_OBJ_construct(&buffStruct, buffer, 0, CAPACITY));
+    TEST_ASSERT_EQUAL((CBUFF_OBJ_Handle)NULL, CBUFF_OBJ_construct(&buffStruct, buffer, OBJECT_SIZE, 0));
 }
 
 void setUp(void)

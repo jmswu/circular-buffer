@@ -176,6 +176,7 @@ CBUFF_OBJ_Handle CBUFF_OBJ_construct(volatile CBUFF_OBJ_Struct *cbuff, volatile 
     if (cbuff == 0) return 0;
     if (data == 0) return 0;
     if (obj_size == 0) return 0;
+    if (capacity == 0) return 0;
 
     cbuff->capacity = capacity;
     cbuff->count = 0;
