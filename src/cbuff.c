@@ -333,7 +333,7 @@ int CBUFF_OBJ_isEmpty(CBUFF_OBJ_Handle handle){
     return isEmpty;
 }
 
-uint16_t CBUFF_OBJ_getNumOfFreeByte(CBUFF_Handle handle){
+uint16_t CBUFF_OBJ_getNumOfFreeSlot(CBUFF_OBJ_Handle handle){
     uint16_t retval = 0;
 
     if (handle == 0) return retval;

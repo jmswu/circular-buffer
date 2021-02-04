@@ -151,10 +151,10 @@ int CBUFF_OBJ_isFull(CBUFF_OBJ_Handle handle);
 int CBUFF_OBJ_isEmpty(CBUFF_OBJ_Handle handle);
 
 /*! \brief Return the number of free bytes in the buffer
- *! \param CBUFF_Handle handle               - circular buffer handler
+ *! \param CBUFF_OBJ_Handle handle           - circular buffer handler
  *! \return uint16_t                         - free byte
  */
-uint16_t CBUFF_OBJ_getNumOfFreeByte(CBUFF_Handle handle);
+uint16_t CBUFF_OBJ_getNumOfFreeSlot(CBUFF_OBJ_Handle handle);
 
 
 
