@@ -5,6 +5,7 @@ CBUFF_Handle CBUFF_construct(volatile CBUFF_Struct *cbuff, volatile uint8_t *dat
     /* make sure pointers are valid */
     if (cbuff == 0) return 0;
     if (data == 0) return 0;
+    if (size == 0) return 0;
 
     cbuff->capacity = size;
     cbuff->count = 0U;
