@@ -337,6 +337,11 @@ void TEST_OBJ_HANDLE_CREATION(void)
     CBUFF_OBJ_Handle handle = CBUFF_OBJ_construct(&buffStruct, buffer, OBJECT_SIZE, CAPACITY);
 
     TEST_ASSERT_NOT_EQUAL((CBUFF_OBJ_Handle)NULL, handle);
+    TEST_ASSERT_EQUAL(CAPACITY, handle->capacity);
+    TEST_ASSERT_EQUAL(OBJECT_SIZE, handle->obj_size);
+    TEST_ASSERT_EQUAL(0, handle->count);
+    TEST_ASSERT_EQUAL(0, handle->head);
+    TEST_ASSERT_EQUAL(0, handle->tail);
 
     TEST_ASSERT_EQUAL((CBUFF_OBJ_Handle)NULL, CBUFF_OBJ_construct(NULL, buffer, OBJECT_SIZE, CAPACITY));
     TEST_ASSERT_EQUAL((CBUFF_OBJ_Handle)NULL, CBUFF_OBJ_construct(&buffStruct, NULL, OBJECT_SIZE, CAPACITY));
@@ -360,6 +365,13 @@ void TEST_OBJ_ADD_DATA(void)
     };
 
     TEST_ASSERT_EQUAL(1, CBUFF_OBJ_put(handle, &testObj));
+    TEST_ASSERT_EQUAL(1, handle->count);
+    TEST_ASSERT_EQUAL(1, handle->head);
+    TEST_ASSERT_EQUAL(0, handle->tail);
+
+    TEST_ASSERT_EQUAL(0, CBUFF_OBJ_put(NULL, &testObj));
+    TEST_ASSERT_EQUAL(0, CBUFF_OBJ_put(handle, NULL));
+    TEST_ASSERT_EQUAL(0, CBUFF_OBJ_put(NULL, NULL));
 }
 
 void setUp(void)
