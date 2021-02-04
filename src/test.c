@@ -28,6 +28,7 @@ void TEST_OBJ_REMOVE_DATA_UNDERFLOW(void);
 void TEST_OBJ_PEEK(void);
 void TEST_OBJ_PEEK_UNDERFLOW(void);
 void TEST_OBJ_GET_FREE_CAPACITY(void);
+void TEST_OBJ_RANDOM_DATA(void);
 void TEST_OBJ_IS_EMPTY(void);
 void TEST_OBJ_IS_FULL(void);
 
@@ -44,6 +45,8 @@ int main(int argc, char ** argv){
     /* dummp code to get rid of warnings */
     argc++;
     argv++;
+
+    srand(time(NULL));
 
     TEST_HANDLE_CREATION();
     TEST_ADD_DATA();
@@ -69,6 +72,7 @@ int main(int argc, char ** argv){
     TEST_OBJ_PEEK();
     TEST_OBJ_PEEK_UNDERFLOW();
     TEST_OBJ_GET_FREE_CAPACITY();
+    TEST_OBJ_RANDOM_DATA();
     TEST_OBJ_IS_EMPTY();
     TEST_OBJ_IS_FULL();
 
@@ -331,7 +335,6 @@ void TEST_RANDOM_DATA(void)
     volatile CBUFF_Handle handle = CBUFF_construct(&bufferStruct, buffer, BUFFER_SIZE);
 
     /* make some random data */
-    srand(time(NULL));
     uint8_t tmpData[256] = {0};
     for(uint16_t i = 0; i < sizeof(tmpData); i++)
     {
@@ -636,6 +639,17 @@ void TEST_OBJ_GET_FREE_CAPACITY(void)
 
     CBUFF_OBJ_put(handle, &testObj);
     TEST_ASSERT_EQUAL(CAPACITY - 4, CBUFF_OBJ_getNumOfFreeSlot(handle));
+}
+
+void TEST_OBJ_RANDOM_DATA(void)
+{
+    const int CAPACITY = 4;
+    const int OBJECT_SIZE = sizeof(testObjType);
+    volatile uint8_t buffer[CAPACITY * OBJECT_SIZE];
+    CBUFF_OBJ_Struct buffStruct;
+    CBUFF_OBJ_Handle handle = CBUFF_OBJ_construct(&buffStruct, buffer, OBJECT_SIZE, CAPACITY);
+
+    handle++;
 }
 
 void TEST_OBJ_IS_EMPTY(void)
