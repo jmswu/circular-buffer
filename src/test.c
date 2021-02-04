@@ -643,13 +643,36 @@ void TEST_OBJ_GET_FREE_CAPACITY(void)
 
 void TEST_OBJ_RANDOM_DATA(void)
 {
-    const int CAPACITY = 4;
+    const int CAPACITY = 1024;
     const int OBJECT_SIZE = sizeof(testObjType);
     volatile uint8_t buffer[CAPACITY * OBJECT_SIZE];
     CBUFF_OBJ_Struct buffStruct;
     CBUFF_OBJ_Handle handle = CBUFF_OBJ_construct(&buffStruct, buffer, OBJECT_SIZE, CAPACITY);
 
-    handle++;
+    const int TEST_SIZE = 256;
+    testObjType testObj[TEST_SIZE];
+
+    /* make some random data */
+    for (uint16_t i = 0; i < TEST_SIZE; i++)
+    {
+        testObj[i].data1 = (uint8_t)rand();
+        testObj[i].data2 = (uint16_t)rand();
+        testObj[i].data3 = (uint32_t)rand();
+    }
+
+    /* put data into buffer */
+    for (uint16_t i = 0; i < TEST_SIZE; i++)
+    {
+        CBUFF_OBJ_put(handle, &testObj[i]);
+    }
+
+    /* read data out */
+    for (uint16_t i = 0; i < TEST_SIZE; i++)
+    {
+        testObjType out;
+        CBUFF_OBJ_get(handle, &out);
+        TEST_ASSERT_EQUAL(0, memcmp(&testObj[i], &out, OBJECT_SIZE));
+    }
 }
 
 void TEST_OBJ_IS_EMPTY(void)
