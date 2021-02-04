@@ -22,6 +22,7 @@ void TEST_OBJ_HANDLE_CREATION(void);
 void TEST_OBJ_ADD_DATA(void);
 void TEST_OBJ_ADD_DATA_BUFFER_FULL(void);
 void TEST_OBJ_ADD_DATA_OVERFLOW(void);
+void TEST_OBJ_REMOVE_DATA(void);
 
 int printEndingMessage(void);
 
@@ -55,6 +56,7 @@ int main(int argc, char ** argv){
     TEST_OBJ_ADD_DATA();
     TEST_OBJ_ADD_DATA_BUFFER_FULL();
     TEST_OBJ_ADD_DATA_OVERFLOW();
+    TEST_OBJ_REMOVE_DATA();
 
     /* CBUFF_OBJ is not tested */
 
@@ -473,6 +475,31 @@ void TEST_OBJ_ADD_DATA_OVERFLOW(void)
     TEST_ASSERT_EQUAL(CAPACITY, handle->count);
     TEST_ASSERT_EQUAL(0, handle->head);
     TEST_ASSERT_EQUAL(0, handle->tail);
+}
+
+void TEST_OBJ_REMOVE_DATA(void)
+{
+    const int CAPACITY = 4;
+    const int OBJECT_SIZE = sizeof(testObjType);
+    volatile uint8_t buffer[CAPACITY * OBJECT_SIZE];
+    CBUFF_OBJ_Struct buffStruct;
+    CBUFF_OBJ_Handle handle = CBUFF_OBJ_construct(&buffStruct, buffer, OBJECT_SIZE, CAPACITY);
+
+    testObjType testObj = 
+    {
+        .data1 = 255,
+        .data2 = 1024,
+        .data3 = 0xFFFFF,
+    };
+
+    testObjType testObjGet;
+
+    CBUFF_OBJ_put(handle, &testObj);
+
+    TEST_ASSERT_EQUAL(1, CBUFF_OBJ_get(handle, &testObjGet));
+    TEST_ASSERT_EQUAL(0, memcmp(&testObj, &testObjGet, OBJECT_SIZE));
+
+    TEST_ASSERT_EQUAL(0, CBUFF_OBJ_get(handle, &testObjGet));
 }
 
 void setUp(void)
