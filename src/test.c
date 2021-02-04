@@ -16,6 +16,7 @@ void TEST_PEEK_UNDERFLOW(void);
 void TEST_GET_FREE_BYTE(void);
 void TEST_RANDOM_DATA(void);
 void TEST_IS_EMPTY(void);
+void TEST_IS_FULL(void);
 
 void TEST_OBJ_HANDLE_CREATION(void);
 void TEST_OBJ_ADD_DATA(void);
@@ -47,6 +48,7 @@ int main(int argc, char ** argv){
     TEST_GET_FREE_BYTE();
     TEST_RANDOM_DATA();
     TEST_IS_EMPTY();
+    TEST_IS_FULL();
 
     TEST_OBJ_HANDLE_CREATION();
     TEST_OBJ_ADD_DATA();
@@ -349,6 +351,29 @@ void TEST_IS_EMPTY(void)
     CBUFF_get(handle);
     TEST_ASSERT_EQUAL(1, CBUFF_isEmpty(handle));
     TEST_ASSERT_EQUAL(1, CBUFF_isEmpty(NULL));
+}
+
+void TEST_IS_FULL(void)
+{
+    const uint16_t BUFFER_SIZE = 4;
+    volatile uint8_t buffer[BUFFER_SIZE];
+    volatile CBUFF_Struct bufferStruct;
+    volatile CBUFF_Handle handle = CBUFF_construct(&bufferStruct, buffer, BUFFER_SIZE);
+
+    TEST_ASSERT_EQUAL(0, CBUFF_isFull(handle));
+    TEST_ASSERT_EQUAL(1, CBUFF_isFull(NULL));
+
+    for(uint16_t i = 0; i < BUFFER_SIZE; i++)
+    {
+        CBUFF_put(handle, 1);
+    }
+
+    TEST_ASSERT_EQUAL(1, CBUFF_isFull(handle));
+    TEST_ASSERT_EQUAL(1, CBUFF_isFull(NULL));
+
+    CBUFF_get(handle);
+    TEST_ASSERT_EQUAL(0, CBUFF_isFull(handle));
+    TEST_ASSERT_EQUAL(1, CBUFF_isFull(NULL));
 }
 
 void TEST_OBJ_HANDLE_CREATION(void)
