@@ -26,6 +26,7 @@ void TEST_OBJ_REMOVE_DATA(void);
 void TEST_OBJ_REMOVE_DATA_BUFFER_EMPTY(void);
 void TEST_OBJ_REMOVE_DATA_UNDERFLOW(void);
 void TEST_OBJ_PEEK(void);
+void TEST_OBJ_PEEK_UNDERFLOW(void);
 
 int printEndingMessage(void);
 
@@ -63,6 +64,7 @@ int main(int argc, char ** argv){
     TEST_OBJ_REMOVE_DATA_BUFFER_EMPTY();
     TEST_OBJ_REMOVE_DATA_UNDERFLOW();
     TEST_OBJ_PEEK();
+    TEST_OBJ_PEEK_UNDERFLOW();
 
     /* CBUFF_OBJ is not tested */
 
@@ -586,6 +588,18 @@ void TEST_OBJ_PEEK(void)
 
     CBUFF_OBJ_get(handle, &testObjGet2);
     TEST_ASSERT_EQUAL(0, memcmp(&testObj1, &testObjGet2, OBJECT_SIZE));
+}
+
+void TEST_OBJ_PEEK_UNDERFLOW(void)
+{
+    const int CAPACITY = 4;
+    const int OBJECT_SIZE = sizeof(testObjType);
+    volatile uint8_t buffer[CAPACITY * OBJECT_SIZE];
+    CBUFF_OBJ_Struct buffStruct;
+    CBUFF_OBJ_Handle handle = CBUFF_OBJ_construct(&buffStruct, buffer, OBJECT_SIZE, CAPACITY);
+
+    testObjType testObjGet;
+    TEST_ASSERT_EQUAL(0, CBUFF_OBJ_peek(handle, &testObjGet));
 }
 
 void setUp(void)
