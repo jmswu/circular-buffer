@@ -17,6 +17,7 @@ void TEST_GET_FREE_BYTE(void);
 void TEST_RANDOM_DATA(void);
 
 void TEST_OBJ_HANDLE_CREATION(void);
+void TEST_OBJ_ADD_DATA(void);
 
 int printEndingMessage(void);
 
@@ -45,6 +46,7 @@ int main(int argc, char ** argv){
     TEST_RANDOM_DATA();
 
     TEST_OBJ_HANDLE_CREATION();
+    TEST_OBJ_ADD_DATA();
 
     /* CBUFF_OBJ is not tested */
 
@@ -340,6 +342,24 @@ void TEST_OBJ_HANDLE_CREATION(void)
     TEST_ASSERT_EQUAL((CBUFF_OBJ_Handle)NULL, CBUFF_OBJ_construct(&buffStruct, NULL, OBJECT_SIZE, CAPACITY));
     TEST_ASSERT_EQUAL((CBUFF_OBJ_Handle)NULL, CBUFF_OBJ_construct(&buffStruct, buffer, 0, CAPACITY));
     TEST_ASSERT_EQUAL((CBUFF_OBJ_Handle)NULL, CBUFF_OBJ_construct(&buffStruct, buffer, OBJECT_SIZE, 0));
+}
+
+void TEST_OBJ_ADD_DATA(void)
+{
+    const int CAPACITY = 4;
+    const int OBJECT_SIZE = sizeof(testObjType);
+    volatile uint8_t buffer[CAPACITY * OBJECT_SIZE];
+    CBUFF_OBJ_Struct buffStruct;
+    CBUFF_OBJ_Handle handle = CBUFF_OBJ_construct(&buffStruct, buffer, OBJECT_SIZE, CAPACITY);
+
+    testObjType testObj = 
+    {
+        .data1 = 255,
+        .data2 = 1024,
+        .data3 = 0xFFFFF,
+    };
+
+    TEST_ASSERT_EQUAL(1, CBUFF_OBJ_put(handle, &testObj));
 }
 
 void setUp(void)
