@@ -36,6 +36,8 @@ int main(int argc, char ** argv){
     TEST_GET_FREE_BYTE();
     TEST_RANDOM_DATA();
 
+    /* CBUFF_OBJ is not tested */
+
     return printEndingMessage();
 }
 
