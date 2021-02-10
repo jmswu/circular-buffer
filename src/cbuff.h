@@ -28,6 +28,8 @@ typedef struct CBUFF_STRUCT{
     volatile uint16_t tail;                 /* pointing to the tail of the ring buffer      */
     volatile uint16_t count;                /* number of byte currented in the ring buffer  */
     volatile uint16_t capacity;             /* the maximum of byte allowed in the buffer    */
+    volatile unsigned overFlowCount;        /* overflow counts                              */
+    volatile unsigned underFlowCount;       /* underflow counts                             */
 #ifdef CBUFF_USE_FAST_MODULO_TWO_ARITHEMTIC
     volatile uint16_t mask_fast_arithemtic; /* mask used in fast modulo two arithemtic      */
 #endif
@@ -95,6 +97,13 @@ int CBUFF_isEmpty(CBUFF_Handle handle);
  *! \return uint16_t                         - free byte
  */
 uint16_t CBUFF_getNumOfFreeByte(CBUFF_Handle handle);
+
+/*! \brief Return the number of overflow/underflow counts
+ *! \param CBUFF_Handle handle               - circular buffer handler
+ *! \return unsigned                         - number of count
+ */
+unsigned CBUFF_getOverflowCounts(CBUFF_Handle handle);
+unsigned CBUFF_getUnderflowCounts(CBUFF_Handle handle);
 
 /*! Struture for constructing a object ring buffer
  */

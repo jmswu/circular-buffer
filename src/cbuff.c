@@ -21,6 +21,8 @@ CBUFF_Handle CBUFF_construct(volatile CBUFF_Struct *cbuff, volatile uint8_t *dat
     cbuff->data = data;
     cbuff->head = 0U;
     cbuff->tail=0U;
+    cbuff->overFlowCount = 0;
+    cbuff->underFlowCount = 0;
 
 #ifdef CBUFF_USE_FAST_MODULO_TWO_ARITHEMTIC
     /* calculate the mask use for the fast modulo 2 arithmetic */
@@ -36,7 +38,10 @@ void CBUFF_put(CBUFF_Handle handle, uint8_t data){
     if (handle == 0) return;
 
     /* chekc if full */
-    if (CBUFF_isFull(handle)) return;
+    if (CBUFF_isFull(handle)) {
+        handle->overFlowCount++;
+        return;
+    }
 
     /* put data into the buffer */
     handle->data[handle->head++] = data;
@@ -86,7 +91,10 @@ uint8_t CBUFF_get(CBUFF_Handle handle){
     /* check handle */
     if (handle == 0) return 0;
 
-    if (CBUFF_isEmpty(handle)) return 0;
+    if (CBUFF_isEmpty(handle)) {
+        handle->underFlowCount++;
+        return 0;
+    }
 
     /* get one byte */
     uint8_t data = 0;
@@ -178,6 +186,16 @@ uint16_t CBUFF_getNumOfFreeByte(CBUFF_Handle handle){
     retval = handle->capacity - handle->count;
     CBUFF_CRITICAL_SECTION_END();
     return retval;
+}
+
+unsigned CBUFF_getOverflowCounts(CBUFF_Handle handle) {
+    if (handle == 0) return ~0;
+    return handle->overFlowCount;
+}
+
+unsigned CBUFF_getUnderflowCounts(CBUFF_Handle handle) {
+    if (handle == 0) return ~0;
+    return handle->underFlowCount;
 }
 
 CBUFF_OBJ_Handle CBUFF_OBJ_construct(volatile CBUFF_OBJ_Struct *cbuff, volatile uint8_t *data, uint16_t obj_size, uint16_t capacity){

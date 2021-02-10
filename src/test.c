@@ -17,6 +17,8 @@ void TEST_GET_FREE_BYTE(void);
 void TEST_RANDOM_DATA(void);
 void TEST_IS_EMPTY(void);
 void TEST_IS_FULL(void);
+void TEST_OVERFLOWCOUNT(void);
+void TEST_UNDERFLOWCOUNT(void);
 
 void TEST_OBJ_HANDLE_CREATION(void);
 void TEST_OBJ_ADD_DATA(void);
@@ -61,6 +63,8 @@ int main(int argc, char ** argv){
     TEST_RANDOM_DATA();
     TEST_IS_EMPTY();
     TEST_IS_FULL();
+    TEST_OVERFLOWCOUNT();
+    TEST_UNDERFLOWCOUNT();
 
     TEST_OBJ_HANDLE_CREATION();
     TEST_OBJ_ADD_DATA();
@@ -395,6 +399,38 @@ void TEST_IS_FULL(void)
     CBUFF_get(handle);
     TEST_ASSERT_EQUAL(0, CBUFF_isFull(handle));
     TEST_ASSERT_EQUAL(1, CBUFF_isFull(NULL));
+}
+
+void TEST_OVERFLOWCOUNT(void)
+{
+    const uint16_t BUFFER_SIZE = 4;
+    volatile uint8_t buffer[BUFFER_SIZE];
+    volatile CBUFF_Struct bufferStruct;
+    volatile CBUFF_Handle handle = CBUFF_construct(&bufferStruct, buffer, BUFFER_SIZE);
+
+    TEST_ASSERT_EQUAL(0, handle->overFlowCount);
+    TEST_ASSERT_EQUAL(0, CBUFF_getOverflowCounts(handle));
+
+    /* fill up the buffer */
+    for(uint16_t i = 0; i < BUFFER_SIZE; i++)
+    {
+        CBUFF_put(handle, 1);
+    }
+
+    CBUFF_put(handle, 0xFF);
+    TEST_ASSERT_EQUAL(1, handle->overFlowCount);
+    TEST_ASSERT_EQUAL(1, CBUFF_getOverflowCounts(handle));
+
+    CBUFF_put(handle, 0xFF);
+    TEST_ASSERT_EQUAL(2, handle->overFlowCount);
+    TEST_ASSERT_EQUAL(2, CBUFF_getOverflowCounts(handle));
+
+    TEST_ASSERT_EQUAL_UINT(~0, CBUFF_getUnderflowCounts(NULL));
+}
+
+void TEST_UNDERFLOWCOUNT(void) 
+{
+
 }
 
 void TEST_OBJ_HANDLE_CREATION(void)
