@@ -2,7 +2,7 @@
 
 #define VER_MAJOR   (0U)
 #define VER_MINOR   (1U)
-#define VER_PATCH   (2U)
+#define VER_PATCH   (3U)
 #define VER_NUM     ((VER_MAJOR << 16) + (VER_MINOR << 8) + (VER_PATCH))
 
 uint32_t CBUFF_getVerNumber(void){
@@ -16,13 +16,10 @@ CBUFF_Handle CBUFF_construct(volatile CBUFF_Struct *cbuff, volatile uint8_t *dat
     if (data == 0) return 0;
     if (size == 0) return 0;
 
+    memset((void *)cbuff, 0, sizeof(CBUFF_Struct));
+
     cbuff->capacity = size;
-    cbuff->count = 0U;
     cbuff->data = data;
-    cbuff->head = 0U;
-    cbuff->tail=0U;
-    cbuff->overFlowCount = 0;
-    cbuff->underFlowCount = 0;
 
 #ifdef CBUFF_USE_FAST_MODULO_TWO_ARITHEMTIC
     /* calculate the mask use for the fast modulo 2 arithmetic */
