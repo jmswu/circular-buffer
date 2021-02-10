@@ -430,6 +430,38 @@ void TEST_OVERFLOWCOUNT(void)
 
 void TEST_UNDERFLOWCOUNT(void) 
 {
+    const uint16_t BUFFER_SIZE = 4;
+    volatile uint8_t buffer[BUFFER_SIZE];
+    volatile CBUFF_Struct bufferStruct;
+    volatile CBUFF_Handle handle = CBUFF_construct(&bufferStruct, buffer, BUFFER_SIZE);
+
+    TEST_ASSERT_EQUAL(0, handle->underFlowCount);
+    TEST_ASSERT_EQUAL(0, CBUFF_getUnderflowCounts(handle));
+
+    /* fill up the buffer */
+    for(uint16_t i = 0; i < BUFFER_SIZE; i++)
+    {
+        CBUFF_put(handle, 1);
+    }
+
+    TEST_ASSERT_EQUAL(0, handle->underFlowCount);
+    TEST_ASSERT_EQUAL(0, CBUFF_getUnderflowCounts(handle));
+
+    /* empty the buffer */
+    for(uint16_t i = 0; i < BUFFER_SIZE; i++)
+    {
+        CBUFF_get(handle);
+    }
+
+    CBUFF_get(handle);
+    TEST_ASSERT_EQUAL(1, handle->underFlowCount);
+    TEST_ASSERT_EQUAL(1, CBUFF_getUnderflowCounts(handle));
+
+    CBUFF_get(handle);
+    TEST_ASSERT_EQUAL(2, handle->underFlowCount);
+    TEST_ASSERT_EQUAL(2, CBUFF_getUnderflowCounts(handle));
+
+    TEST_ASSERT_EQUAL_UINT(~0, CBUFF_getUnderflowCounts(NULL));
 
 }
 
