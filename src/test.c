@@ -88,6 +88,10 @@ int main(int argc, char ** argv){
 int printEndingMessage(void)
 {
     printf("-------------------------------------------------------------------------\n");
+    printf("Testin circular buffer library, v%u.%u.%u\n",
+        (CBUFF_getVerNumber() & 0x00FF0000) >> 16,
+        (CBUFF_getVerNumber() & 0x0000FF00) >> 8,
+        (CBUFF_getVerNumber() & 0x000000FF));
     printf("If you ONLY see this and no other message, it means all tests are passed!\n");
     printf("-------------------------------------------------------------------------\n");
     return 0;
