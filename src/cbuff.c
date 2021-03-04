@@ -2,7 +2,7 @@
 
 #define VER_MAJOR   (0U)
 #define VER_MINOR   (1U)
-#define VER_PATCH   (3U)
+#define VER_PATCH   (4U)
 #define VER_NUM     ((VER_MAJOR << 16) + (VER_MINOR << 8) + (VER_PATCH))
 
 uint32_t CBUFF_getVerNumber(void){
@@ -29,7 +29,7 @@ CBUFF_Handle CBUFF_construct(volatile CBUFF_Struct *cbuff, volatile uint8_t *dat
     return (CBUFF_Handle)cbuff;
 }
 
-void CBUFF_put(CBUFF_Handle handle, uint8_t data){
+void CBUFF_put(const CBUFF_Handle handle, uint8_t data){
     
     /* check handle */
     if (handle == 0) return;
@@ -64,7 +64,7 @@ void CBUFF_put(CBUFF_Handle handle, uint8_t data){
     return;
 }
 
-uint8_t CBUFF_put_block(CBUFF_Handle handle, uint8_t *data, uint8_t size){
+uint8_t CBUFF_put_block(const CBUFF_Handle handle, const uint8_t *data, uint8_t size){
 
     /* null check */
     if (handle == NULL) return 0;
@@ -83,7 +83,7 @@ uint8_t CBUFF_put_block(CBUFF_Handle handle, uint8_t *data, uint8_t size){
     return 1;
 }
 
-uint8_t CBUFF_get(CBUFF_Handle handle){
+uint8_t CBUFF_get(const CBUFF_Handle handle){
 
     /* check handle */
     if (handle == 0) return 0;
@@ -117,7 +117,7 @@ uint8_t CBUFF_get(CBUFF_Handle handle){
     return data;
 }
 
-uint8_t CBUFF_peek(CBUFF_Handle handle){
+uint8_t CBUFF_peek(const CBUFF_Handle handle){
 
     /* check handle */
     if (handle == 0) return 0;
@@ -132,7 +132,7 @@ uint8_t CBUFF_peek(CBUFF_Handle handle){
     }
 }
 
-int CBUFF_isFull(CBUFF_Handle handle){
+int CBUFF_isFull(const CBUFF_Handle handle){
 
     const int FULL = 1;
     const int NOT_FULL = 0;
@@ -153,7 +153,7 @@ int CBUFF_isFull(CBUFF_Handle handle){
 
 }
 
-int CBUFF_isEmpty(CBUFF_Handle handle){
+int CBUFF_isEmpty(const CBUFF_Handle handle){
 
     const int EMPTY = 1;
     const int NOT_EMPTY = 0;
@@ -174,7 +174,7 @@ int CBUFF_isEmpty(CBUFF_Handle handle){
 
 }
 
-uint16_t CBUFF_getNumOfFreeByte(CBUFF_Handle handle){
+uint16_t CBUFF_getNumOfFreeByte(const CBUFF_Handle handle){
     uint16_t retval = 0;
 
     if (handle == 0) return retval;
@@ -185,12 +185,12 @@ uint16_t CBUFF_getNumOfFreeByte(CBUFF_Handle handle){
     return retval;
 }
 
-unsigned CBUFF_getOverflowCounts(CBUFF_Handle handle) {
+unsigned CBUFF_getOverflowCounts(const CBUFF_Handle handle) {
     if (handle == 0) return ~0;
     return handle->overFlowCount;
 }
 
-unsigned CBUFF_getUnderflowCounts(CBUFF_Handle handle) {
+unsigned CBUFF_getUnderflowCounts(const CBUFF_Handle handle) {
     if (handle == 0) return ~0;
     return handle->underFlowCount;
 }

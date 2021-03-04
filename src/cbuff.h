@@ -55,7 +55,7 @@ CBUFF_Handle CBUFF_construct(volatile CBUFF_Struct *cbuff, volatile uint8_t *dat
  *! \param uint8_t data                      - one byte that need to be put into the buffer
  *! \return                                  - void
  */
-void CBUFF_put(CBUFF_Handle handle, uint8_t data);
+void CBUFF_put(const CBUFF_Handle handle, uint8_t data);
 
 /*! \brief  Put one block of data into the circular buffer
  *! \param CBUFF_Handle handle               - circular buffer handler
@@ -63,7 +63,7 @@ void CBUFF_put(CBUFF_Handle handle, uint8_t data);
  *! \param uint8_t size                      - size of the data
  *! \return                                  - 1 = successful, 0 = failed
  */
-uint8_t CBUFF_put_block(CBUFF_Handle handle, uint8_t *data, uint8_t size);
+uint8_t CBUFF_put_block(const CBUFF_Handle handle, const uint8_t *data, uint8_t size);
 
 /*! \brief Get one byte from the circular buffer
  *!         If there is no more data in the buffer
@@ -71,39 +71,39 @@ uint8_t CBUFF_put_block(CBUFF_Handle handle, uint8_t *data, uint8_t size);
  *! \param CBUFF_Handle handle               - circular buffer handler
  *! \return uint8_t                          - one byte read from the circular buffer
  */
-uint8_t CBUFF_get(CBUFF_Handle handle);
+uint8_t CBUFF_get(const CBUFF_Handle handle);
 
 /*! \brief Get one byte from the circular buffer without actually remove it from the ring buffer
  *!         It will return 0 if buffer is empty, with no warnings
  *! \param CBUFF_Handle handle               - circular buffer handler
  *! \return uint8_t                          - one byte read from the circular buffer
  */
-uint8_t CBUFF_peek(CBUFF_Handle handle);
+uint8_t CBUFF_peek(const CBUFF_Handle handle);
 
 /*! \brief Tell if the ring buffer is full
  *! \param CBUFF_Handle handle               - circular buffer handler
  *! \return int                              - 1 = is full, 0 = is not full
  */
-int CBUFF_isFull(CBUFF_Handle handle);
+int CBUFF_isFull(const CBUFF_Handle handle);
 
 /*! \brief Tell if the ring buffer is empty
  *! \param CBUFF_Handle handle               - circular buffer handler
  *! \return int                              - 1 = is empty, 0 = is not empty
  */
-int CBUFF_isEmpty(CBUFF_Handle handle);
+int CBUFF_isEmpty(const CBUFF_Handle handle);
 
 /*! \brief Return the number of free bytes in the buffer
  *! \param CBUFF_Handle handle               - circular buffer handler
  *! \return uint16_t                         - free byte
  */
-uint16_t CBUFF_getNumOfFreeByte(CBUFF_Handle handle);
+uint16_t CBUFF_getNumOfFreeByte(const CBUFF_Handle handle);
 
 /*! \brief Return the number of overflow/underflow counts
  *! \param CBUFF_Handle handle               - circular buffer handler
  *! \return unsigned                         - number of count
  */
-unsigned CBUFF_getOverflowCounts(CBUFF_Handle handle);
-unsigned CBUFF_getUnderflowCounts(CBUFF_Handle handle);
+unsigned CBUFF_getOverflowCounts(const CBUFF_Handle handle);
+unsigned CBUFF_getUnderflowCounts(const CBUFF_Handle handle);
 
 /*! Struture for constructing a object ring buffer
  */
