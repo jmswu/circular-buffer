@@ -54,3 +54,4 @@ dkms.conf
 #application file
 example
 .vscode/
+build/
