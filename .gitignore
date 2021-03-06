@@ -52,6 +52,5 @@ Mkfile.old
 dkms.conf
 
 #application file
-example
 .vscode/
 build/
