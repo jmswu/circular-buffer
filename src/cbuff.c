@@ -2,7 +2,7 @@
 
 #define VER_MAJOR   (0U)
 #define VER_MINOR   (1U)
-#define VER_PATCH   (4U)
+#define VER_PATCH   (5U)
 #define VER_NUM     ((VER_MAJOR << 16) + (VER_MINOR << 8) + (VER_PATCH))
 
 uint32_t CBUFF_getVerNumber(void){
