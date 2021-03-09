@@ -46,7 +46,7 @@ uint32_t CBUFF_getVerNumber(void);
  *! \param uint16_t size                     - the maximum capacity of the ring buffer
  *! \return CBUFF_Handle                     - handle to ring buffer
  */
-CBUFF_Handle CBUFF_construct(volatile CBUFF_Struct *cbuff, volatile uint8_t *data, uint16_t size);
+CBUFF_Handle CBUFF_construct(volatile CBUFF_Struct * const cbuff, volatile uint8_t * const data, const uint16_t size);
 
 /*! \brief  Put one byte into the circular buffer
  *!         If buffer is full, no more data will be put into

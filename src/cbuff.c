@@ -9,7 +9,7 @@ uint32_t CBUFF_getVerNumber(void){
     return VER_NUM;
 }
 
-CBUFF_Handle CBUFF_construct(volatile CBUFF_Struct *cbuff, volatile uint8_t *data, uint16_t size){
+CBUFF_Handle CBUFF_construct(volatile CBUFF_Struct * const cbuff, volatile uint8_t * const data, const uint16_t size){
 
     /* make sure pointers are valid */
     if (cbuff == 0) return 0;
