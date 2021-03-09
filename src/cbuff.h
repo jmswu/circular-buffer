@@ -55,7 +55,7 @@ CBUFF_Handle CBUFF_construct(volatile CBUFF_Struct * const cbuff, volatile uint8
  *! \param uint8_t data                      - one byte that need to be put into the buffer
  *! \return                                  - void
  */
-void CBUFF_put(const CBUFF_Handle handle, uint8_t data);
+void CBUFF_put(const CBUFF_Handle handle, const uint8_t data);
 
 /*! \brief  Put one block of data into the circular buffer
  *! \param CBUFF_Handle handle               - circular buffer handler
@@ -63,7 +63,7 @@ void CBUFF_put(const CBUFF_Handle handle, uint8_t data);
  *! \param uint8_t size                      - size of the data
  *! \return                                  - 1 = successful, 0 = failed
  */
-uint8_t CBUFF_put_block(const CBUFF_Handle handle, const uint8_t *data, uint8_t size);
+uint8_t CBUFF_put_block(const CBUFF_Handle handle, const uint8_t * const data, const uint8_t size);
 
 /*! \brief Get one byte from the circular buffer
  *!         If there is no more data in the buffer

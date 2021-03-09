@@ -29,7 +29,7 @@ CBUFF_Handle CBUFF_construct(volatile CBUFF_Struct * const cbuff, volatile uint8
     return (CBUFF_Handle)cbuff;
 }
 
-void CBUFF_put(const CBUFF_Handle handle, uint8_t data){
+void CBUFF_put(const CBUFF_Handle handle, const uint8_t data){
     
     /* check handle */
     if (handle == 0) return;
@@ -64,7 +64,7 @@ void CBUFF_put(const CBUFF_Handle handle, uint8_t data){
     return;
 }
 
-uint8_t CBUFF_put_block(const CBUFF_Handle handle, const uint8_t *data, uint8_t size){
+uint8_t CBUFF_put_block(const CBUFF_Handle handle, const uint8_t * const data, const uint8_t size){
 
     /* null check */
     if (handle == NULL) return 0;
