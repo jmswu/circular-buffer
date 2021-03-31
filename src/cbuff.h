@@ -86,11 +86,15 @@ uint8_t CBUFF_peek(const CBUFF_Handle handle);
  */
 int CBUFF_isFull(const CBUFF_Handle handle);
 
+int CBUFF_isEmptySpaceAvailable(const CBUFF_Handle handle);
+
 /*! \brief Tell if the ring buffer is empty
  *! \param CBUFF_Handle handle               - circular buffer handler
  *! \return int                              - 1 = is empty, 0 = is not empty
  */
 int CBUFF_isEmpty(const CBUFF_Handle handle);
+
+int CBUFF_isDataAvailable(const CBUFF_Handle handle);
 
 /*! \brief Return the number of free bytes in the buffer
  *! \param CBUFF_Handle handle               - circular buffer handler

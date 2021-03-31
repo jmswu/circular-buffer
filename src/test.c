@@ -373,13 +373,22 @@ void TEST_IS_EMPTY(void)
     TEST_ASSERT_EQUAL(1, CBUFF_isEmpty(handle));
     TEST_ASSERT_EQUAL(1, CBUFF_isEmpty(NULL));
 
+    TEST_ASSERT_EQUAL(0, CBUFF_isDataAvailable(handle));
+    TEST_ASSERT_EQUAL(0, CBUFF_isDataAvailable(NULL));
+
     CBUFF_put(handle, 1);
     TEST_ASSERT_EQUAL(0, CBUFF_isEmpty(handle));
     TEST_ASSERT_EQUAL(1, CBUFF_isEmpty(NULL));
 
+    TEST_ASSERT_EQUAL(1, CBUFF_isDataAvailable(handle));
+    TEST_ASSERT_EQUAL(0, CBUFF_isDataAvailable(NULL));
+
     CBUFF_get(handle);
     TEST_ASSERT_EQUAL(1, CBUFF_isEmpty(handle));
     TEST_ASSERT_EQUAL(1, CBUFF_isEmpty(NULL));
+
+    TEST_ASSERT_EQUAL(0, CBUFF_isDataAvailable(handle));
+    TEST_ASSERT_EQUAL(0, CBUFF_isDataAvailable(NULL));
 }
 
 void TEST_IS_FULL(void)
@@ -392,6 +401,9 @@ void TEST_IS_FULL(void)
     TEST_ASSERT_EQUAL(0, CBUFF_isFull(handle));
     TEST_ASSERT_EQUAL(1, CBUFF_isFull(NULL));
 
+    TEST_ASSERT_EQUAL(1, CBUFF_isEmptySpaceAvailable(handle));
+    TEST_ASSERT_EQUAL(0, CBUFF_isEmptySpaceAvailable(NULL));
+
     for(uint16_t i = 0; i < BUFFER_SIZE; i++)
     {
         CBUFF_put(handle, 1);
@@ -400,9 +412,15 @@ void TEST_IS_FULL(void)
     TEST_ASSERT_EQUAL(1, CBUFF_isFull(handle));
     TEST_ASSERT_EQUAL(1, CBUFF_isFull(NULL));
 
+    TEST_ASSERT_EQUAL(0, CBUFF_isEmptySpaceAvailable(handle));
+    TEST_ASSERT_EQUAL(0, CBUFF_isEmptySpaceAvailable(NULL));
+
     CBUFF_get(handle);
     TEST_ASSERT_EQUAL(0, CBUFF_isFull(handle));
     TEST_ASSERT_EQUAL(1, CBUFF_isFull(NULL));
+
+    TEST_ASSERT_EQUAL(1, CBUFF_isEmptySpaceAvailable(handle));
+    TEST_ASSERT_EQUAL(0, CBUFF_isEmptySpaceAvailable(NULL));
 }
 
 void TEST_OVERFLOWCOUNT(void)

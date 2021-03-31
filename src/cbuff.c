@@ -153,6 +153,12 @@ int CBUFF_isFull(const CBUFF_Handle handle){
 
 }
 
+int CBUFF_isEmptySpaceAvailable(const CBUFF_Handle handle){
+    const int NO_SPACE = 0;
+    if (handle == 0) return NO_SPACE;
+    return !CBUFF_isFull(handle);
+}
+
 int CBUFF_isEmpty(const CBUFF_Handle handle){
 
     const int EMPTY = 1;
@@ -172,6 +178,12 @@ int CBUFF_isEmpty(const CBUFF_Handle handle){
 
     return isEmpty;
 
+}
+
+int CBUFF_isDataAvailable(const CBUFF_Handle handle){
+    const int NO_DATA = 0;
+    if (handle == 0) return NO_DATA;
+    return !CBUFF_isEmpty(handle);
 }
 
 uint16_t CBUFF_getNumOfFreeByte(const CBUFF_Handle handle){
