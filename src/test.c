@@ -928,10 +928,13 @@ void TEST_OBJ_GET_OVERFLOW(void)
     {
         CBUFF_OBJ_put(handle, &testObjGet);
     }
-    TEST_ASSERT_EQUAL(TEST_COUNTS - CAPACITY, CUBFF_OBJ_getUnderflowCounts(handle));
+    TEST_ASSERT_EQUAL(TEST_COUNTS - CAPACITY, CBUFF_OBJ_getOverflowCounts(handle));
+
+    CBUFF_OBJ_put(handle, &testObjGet);
+    TEST_ASSERT_EQUAL(TEST_COUNTS - CAPACITY + 1, CBUFF_OBJ_getOverflowCounts(handle));
 
     CBUFF_OBJ_get(handle, &testObjGet);
-    TEST_ASSERT_EQUAL(TEST_COUNTS + 1, CUBFF_OBJ_getUnderflowCounts(handle));
+    TEST_ASSERT_EQUAL(TEST_COUNTS - CAPACITY + 1, CBUFF_OBJ_getOverflowCounts(handle));
 }
 
 void setUp(void)
