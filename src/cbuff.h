@@ -181,6 +181,13 @@ int CBUFF_OBJ_isEmpty(CBUFF_OBJ_Handle handle);
  */
 uint16_t CBUFF_OBJ_getNumOfFreeSlot(CBUFF_OBJ_Handle handle);
 
+/*! \brief Return the number of overflow/underflow counts
+ *! \param CBUFF_Handle handle               - circular buffer handler
+ *! \return uint16_t                         - number of count
+ */
+uint16_t CBUFF_OBJ_getOverflowCounts(const CBUFF_OBJ_Handle handle);
+uint16_t CUBFF_OBJ_getUnderflowCounts(const CBUFF_OBJ_Handle handle);
+
 
 
 #ifdef	__cplusplus

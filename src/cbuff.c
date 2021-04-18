@@ -390,3 +390,15 @@ uint16_t CBUFF_OBJ_getNumOfFreeSlot(CBUFF_OBJ_Handle handle){
     CBUFF_CRITICAL_SECTION_END();
     return retval;
 }
+
+uint16_t CBUFF_OBJ_getOverflowCounts(const CBUFF_OBJ_Handle handle)
+{
+    if (handle == 0) return ~0;
+    return handle->overflowCount;
+}
+
+uint16_t CUBFF_OBJ_getUnderflowCounts(const CBUFF_OBJ_Handle handle)
+{
+    if (handle == 0) return ~0;
+    return handle->underflowCount;
+}
