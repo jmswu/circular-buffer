@@ -126,6 +126,8 @@ typedef struct CBUFF_OBJ_STRUCT{
     volatile uint16_t capacity;
     volatile uint16_t count;
     volatile uint16_t obj_size;
+    volatile uint16_t overflowCount;
+    volatile uint16_t underflowCount;
 } CBUFF_OBJ_Struct;
 
 typedef CBUFF_OBJ_Struct *CBUFF_OBJ_Handle;

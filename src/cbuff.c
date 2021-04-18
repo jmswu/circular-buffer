@@ -221,6 +221,8 @@ CBUFF_OBJ_Handle CBUFF_OBJ_construct(volatile CBUFF_OBJ_Struct *cbuff, volatile 
     cbuff->tail = 0;
     cbuff->data = data;
     cbuff->obj_size = obj_size;
+    cbuff->overflowCount = 0;
+    cbuff->underflowCount = 0;
 
     return (CBUFF_OBJ_Handle)cbuff;
 }
@@ -234,7 +236,11 @@ int CBUFF_OBJ_put(CBUFF_OBJ_Handle handle, void *obj){
     if (handle == 0) return FAILED;
     if (obj == 0) return FAILED;
     
-    if (CBUFF_OBJ_isFull(handle)) return FAILED;
+    if (CBUFF_OBJ_isFull(handle))
+    {
+        handle->overflowCount++;
+        return FAILED;
+    }
 
     /* offset location for the destination data */
     uint16_t offset = 0;
@@ -272,7 +278,12 @@ int CBUFF_OBJ_get(CBUFF_OBJ_Handle handle, void *obj){
     /* pointer check */
     if (handle == 0) return FAILED;
     if (obj == 0) return FAILED;
-    if (CBUFF_OBJ_isEmpty(handle)) return FAILED;
+
+    if (CBUFF_OBJ_isEmpty(handle)) 
+    {
+        handle->underflowCount++;
+        return FAILED;
+    }
 
     /* offset location for the object */
     uint16_t offset = 0;
