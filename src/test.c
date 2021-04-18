@@ -34,6 +34,7 @@ void TEST_OBJ_RANDOM_DATA(void);
 void TEST_OBJ_IS_EMPTY(void);
 void TEST_OBJ_IS_FULL(void);
 void TEST_OBJ_OVERFLOW(void);
+void TEST_OBJ_UNDERFLOW(void);
 
 int printEndingMessage(void);
 
@@ -81,6 +82,7 @@ int main(int argc, char ** argv){
     TEST_OBJ_IS_EMPTY();
     TEST_OBJ_IS_FULL();
     TEST_OBJ_OVERFLOW();
+    TEST_OBJ_UNDERFLOW();
 
     /* CBUFF_OBJ is not tested */
 
@@ -841,6 +843,44 @@ void TEST_OBJ_OVERFLOW(void)
     {
         CBUFF_OBJ_put(handle, &testObj);
         TEST_ASSERT_EQUAL(i + 1, handle->overflowCount);
+    }
+}
+
+void TEST_OBJ_UNDERFLOW(void)
+{
+    const int CAPACITY = 4;
+    const int OBJECT_SIZE = sizeof(testObjType);
+    volatile uint8_t buffer[CAPACITY * OBJECT_SIZE];
+    CBUFF_OBJ_Struct buffStruct;
+    CBUFF_OBJ_Handle handle = CBUFF_OBJ_construct(&buffStruct, buffer, OBJECT_SIZE, CAPACITY);
+
+    TEST_ASSERT_NOT_EQUAL(handle, NULL);
+
+    testObjType testObj = 
+    {
+        .data1 = 1,
+        .data2 = 1024,
+        .data3 = 0xFFFFF,
+    };
+
+    testObjType testObjGet = {0};
+
+    for(int i = 0; i < CAPACITY; i++)
+    {
+        CBUFF_OBJ_put(handle, &testObj);
+        TEST_ASSERT_EQUAL(0, handle->underflowCount);
+    }
+
+    for(int i = 0; i < CAPACITY; i++)
+    {
+        CBUFF_OBJ_get(handle, &testObjGet);
+        TEST_ASSERT_EQUAL(0, handle->underflowCount);
+    }
+
+    for(int i = 0; i < 12345; i++)
+    {
+        CBUFF_OBJ_get(handle, &testObjGet);
+        TEST_ASSERT_EQUAL(i + 1, handle->underflowCount);
     }
 }
 
