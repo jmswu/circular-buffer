@@ -207,7 +207,7 @@ unsigned CBUFF_getUnderflowCounts(const CBUFF_Handle handle) {
     return handle->underFlowCount;
 }
 
-CBUFF_OBJ_Handle CBUFF_OBJ_construct(volatile CBUFF_OBJ_Struct *cbuff, volatile uint8_t *data, uint16_t obj_size, uint16_t capacity){
+CBUFF_OBJ_Handle CBUFF_OBJ_construct(volatile CBUFF_OBJ_Struct * const cbuff, volatile uint8_t * const data, const uint16_t obj_size, const uint16_t capacity){
 
     /* make sure pointers are valid */
     if (cbuff == 0) return 0;
@@ -227,7 +227,7 @@ CBUFF_OBJ_Handle CBUFF_OBJ_construct(volatile CBUFF_OBJ_Struct *cbuff, volatile 
     return (CBUFF_OBJ_Handle)cbuff;
 }
 
-int CBUFF_OBJ_put(CBUFF_OBJ_Handle handle, void *obj){
+int CBUFF_OBJ_put(const CBUFF_OBJ_Handle handle, void * const obj){
 
     const int SUCCESS = 1;
     const int FAILED = 0;
@@ -270,7 +270,7 @@ int CBUFF_OBJ_put(CBUFF_OBJ_Handle handle, void *obj){
     return SUCCESS;
 }
 
-int CBUFF_OBJ_get(CBUFF_OBJ_Handle handle, void *obj){
+int CBUFF_OBJ_get(const CBUFF_OBJ_Handle handle, void * const obj){
 
     const int SUCCESS = 1;
     const int FAILED = 0;
@@ -313,7 +313,7 @@ int CBUFF_OBJ_get(CBUFF_OBJ_Handle handle, void *obj){
     return SUCCESS;
 }
 
-int CBUFF_OBJ_peek(CBUFF_OBJ_Handle handle, void *obj){
+int CBUFF_OBJ_peek(const CBUFF_OBJ_Handle handle, void * const obj){
 
     const int SUCCESS = 1;
     const int FAILED = 0;
@@ -337,7 +337,7 @@ int CBUFF_OBJ_peek(CBUFF_OBJ_Handle handle, void *obj){
     return SUCCESS;
 }
 
-int CBUFF_OBJ_isFull(CBUFF_OBJ_Handle handle){
+int CBUFF_OBJ_isFull(const CBUFF_OBJ_Handle handle){
 
     /* pointer check */
     if (handle == 0) return 1;
@@ -359,7 +359,7 @@ int CBUFF_OBJ_isFull(CBUFF_OBJ_Handle handle){
 }
 
 
-int CBUFF_OBJ_isEmpty(CBUFF_OBJ_Handle handle){
+int CBUFF_OBJ_isEmpty(const CBUFF_OBJ_Handle handle){
 
     /* pointer check */
     if (handle == 0) return 1;
@@ -380,7 +380,7 @@ int CBUFF_OBJ_isEmpty(CBUFF_OBJ_Handle handle){
     return isEmpty;
 }
 
-uint16_t CBUFF_OBJ_getNumOfFreeSlot(CBUFF_OBJ_Handle handle){
+uint16_t CBUFF_OBJ_getNumOfFreeSlot(const CBUFF_OBJ_Handle handle){
     uint16_t retval = 0;
 
     if (handle == 0) return retval;
