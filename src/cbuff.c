@@ -2,7 +2,7 @@
 
 #define VER_MAJOR   (0U)
 #define VER_MINOR   (1U)
-#define VER_PATCH   (8U)
+#define VER_PATCH   (9U)
 #define VER_NUM     ((VER_MAJOR << 16) + (VER_MINOR << 8) + (VER_PATCH))
 
 uint32_t CBUFF_getVerNumber(void){
@@ -227,7 +227,7 @@ CBUFF_OBJ_Handle CBUFF_OBJ_construct(volatile CBUFF_OBJ_Struct * const cbuff, vo
     return (CBUFF_OBJ_Handle)cbuff;
 }
 
-int CBUFF_OBJ_put(const CBUFF_OBJ_Handle handle, void * const obj){
+int CBUFF_OBJ_put(const CBUFF_OBJ_Handle handle, volatile void * const obj){
 
     const int SUCCESS = 1;
     const int FAILED = 0;
@@ -270,7 +270,7 @@ int CBUFF_OBJ_put(const CBUFF_OBJ_Handle handle, void * const obj){
     return SUCCESS;
 }
 
-int CBUFF_OBJ_get(const CBUFF_OBJ_Handle handle, void * const obj){
+int CBUFF_OBJ_get(const CBUFF_OBJ_Handle handle, volatile void * const obj){
 
     const int SUCCESS = 1;
     const int FAILED = 0;
@@ -313,7 +313,7 @@ int CBUFF_OBJ_get(const CBUFF_OBJ_Handle handle, void * const obj){
     return SUCCESS;
 }
 
-int CBUFF_OBJ_peek(const CBUFF_OBJ_Handle handle, void * const obj){
+int CBUFF_OBJ_peek(const CBUFF_OBJ_Handle handle, volatile void * const obj){
 
     const int SUCCESS = 1;
     const int FAILED = 0;

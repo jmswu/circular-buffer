@@ -143,24 +143,24 @@ CBUFF_OBJ_Handle CBUFF_OBJ_construct(volatile CBUFF_OBJ_Struct * const cbuff, vo
 
 /*! \brief Put one object into the circular buffer
  *! \param CBUFF_OBJ_Handle handle           - object circular buffer handler
- *! \param void *obj                         - pointer to the object that need to be put into the buffer
+ *! \param volatile void *obj                - pointer to the object that need to be put into the buffer
  *! \return                                  - success = 1, failed = 0;
  */
-int CBUFF_OBJ_put(const CBUFF_OBJ_Handle handle, void * const obj);
+int CBUFF_OBJ_put(const CBUFF_OBJ_Handle handle, volatile void * const obj);
 
 /*! \brief Get one object from the circular buffer
  *! \param CBUFF_OBJ_Handle handle           - circular buffer handler
- *! \param void *obj                         - pointer to the object that CBUFF_OBJ_get() write to
+ *! \param volatile void *obj                - pointer to the object that CBUFF_OBJ_get() write to
  *! \return                                  - success = 1, failed = 0;
  */
-int CBUFF_OBJ_get(const CBUFF_OBJ_Handle handle, void * const obj);
+int CBUFF_OBJ_get(const CBUFF_OBJ_Handle handle, volatile void * const obj);
 
 /*! \brief Get one object from the circular buffer without actually remove it from the ring buffer
  *! \param CBUFF_OBJ_Handle handle           - circular buffer handler
- *! \param void *obj                         - pointer to the object that CBUFF_OBJ_get() write to
+ *! \param volatile void *obj                - pointer to the object that CBUFF_OBJ_get() write to
  *! \return                                  - success = 1, failed = 0;
  */
-int CBUFF_OBJ_peek(const CBUFF_OBJ_Handle handle, void * const obj);
+int CBUFF_OBJ_peek(const CBUFF_OBJ_Handle handle, volatile void * const obj);
 
 
 /*! \brief Tell if the ring buffer is full
