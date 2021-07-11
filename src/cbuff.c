@@ -48,9 +48,7 @@ void CBUFF_put(const CBUFF_Handle handle, const uint8_t data){
     handle->head = handle->head & handle->mask_fast_arithemtic;
 #else
     /* check for overflow */
-    if (handle->head >= handle->capacity){
-        handle->head = 0;
-    }
+    handle->head = (handle->head >= handle->capacity) ? 0 : handle->head;
 #endif
 
 
