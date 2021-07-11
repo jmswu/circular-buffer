@@ -2,7 +2,7 @@
 
 #define VER_MAJOR   (0U)
 #define VER_MINOR   (1U)
-#define VER_PATCH   (9U)
+#define VER_PATCH   (10U)
 #define VER_NUM     ((VER_MAJOR << 16) + (VER_MINOR << 8) + (VER_PATCH))
 
 uint32_t CBUFF_getVerNumber(void){
@@ -54,9 +54,7 @@ void CBUFF_put(const CBUFF_Handle handle, const uint8_t data){
 
     /* increase queue data count */
     CBUFF_CRITICAL_SECTION_BEGIN();
-    if (handle->count < handle->capacity){
-        handle->count++;
-    }
+    handle->count = (handle->count < handle->capacity) ? handle->count + 1 : handle->count;
     CBUFF_CRITICAL_SECTION_END();
 
     return;
@@ -100,16 +98,12 @@ uint8_t CBUFF_get(const CBUFF_Handle handle){
     handle->tail = handle->tail & handle->mask_fast_arithemtic;
 #else
     /* check for overflow */
-    if (handle->tail >= handle->capacity){
-        handle->tail = 0;
-    }
+    handle->tail = (handle->tail >= handle->capacity) ? 0 : handle->tail;
 #endif
 
     /* decrease queued data count */
     CBUFF_CRITICAL_SECTION_BEGIN();
-    if (handle->count > 0){
-        handle->count--;
-    }
+    handle->count = (handle->count > 0) ? handle->count - 1 : handle->count;
     CBUFF_CRITICAL_SECTION_END();
 
     return data;
