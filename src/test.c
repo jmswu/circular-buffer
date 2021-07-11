@@ -455,7 +455,7 @@ void TEST_OVERFLOWCOUNT(void)
     TEST_ASSERT_EQUAL(2, handle->overFlowCount);
     TEST_ASSERT_EQUAL(2, CBUFF_getOverflowCounts(handle));
 
-    TEST_ASSERT_EQUAL_UINT(~0, CBUFF_getUnderflowCounts(NULL));
+    TEST_ASSERT_EQUAL((unsigned)~0, CBUFF_getUnderflowCounts(NULL));
 }
 
 void TEST_UNDERFLOWCOUNT(void) 
@@ -491,7 +491,7 @@ void TEST_UNDERFLOWCOUNT(void)
     TEST_ASSERT_EQUAL(2, handle->underFlowCount);
     TEST_ASSERT_EQUAL(2, CBUFF_getUnderflowCounts(handle));
 
-    TEST_ASSERT_EQUAL_UINT(~0, CBUFF_getUnderflowCounts(NULL));
+    TEST_ASSERT_EQUAL((unsigned)~0, CBUFF_getUnderflowCounts(NULL));
 
 }
 
